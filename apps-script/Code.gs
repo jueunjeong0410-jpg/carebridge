@@ -1,11 +1,14 @@
 /**
  * CareBridge 상담 문의 접수기 (Google Apps Script)
  *
- * 홈페이지 문의 폼 → ① 구글 시트에 저장 ② 내 Gmail로 메일 ③ ntfy 앱으로 휴대폰 푸시
+ * 홈페이지 문의 폼 → ① 구글 시트에 저장 ② 알림 메일 발송
+ * (휴대폰 푸시는 홈페이지(site.js)가 접수 성공 직후 ntfy로 바로 보냅니다.
+ *  구글 서버에서 ntfy로 보내면 공용 IP 한도에 걸려 막히기 때문)
  *
  * 설정값은 코드에 적지 않고 [프로젝트 설정 → 스크립트 속성]에 넣습니다.
  *   NOTIFY_EMAIL : 알림 받을 이메일 (예: me@gmail.com, 여러 명이면 쉼표로)
- *   NTFY_TOPIC   : ntfy 앱에서 구독할 비밀 토픽 이름 (예: carebridge-7f3k9q2x)
+ *   SHEET_ID     : 문의를 저장할 구글 시트 ID (시트 주소의 /d/ 와 /edit 사이 글자)
+ *                  — 시트에서 [확장 프로그램 → Apps Script]로 만든 경우엔 없어도 됩니다.
  */
 
 const SHEET_NAME = 'Inquiries';
@@ -33,9 +36,8 @@ function doPost(e) {
     const now = new Date();
     saveToSheet_(d, now);
 
-    // 알림은 하나가 실패해도 접수 자체는 성공 처리
+    // 메일이 실패해도 접수 자체는 성공 처리
     try { sendEmail_(d, now); } catch (err) { console.error('email failed', err); }
-    try { sendPush_(d); } catch (err) { console.error('push failed', err); }
 
     return json_({ code: 'OK' });
   } catch (err) {
@@ -49,8 +51,15 @@ function doGet() {
 }
 
 // ── 시트 저장 ──
+function getSpreadsheet_() {
+  const id = PropertiesService.getScriptProperties().getProperty('SHEET_ID');
+  const ss = id ? SpreadsheetApp.openById(id) : SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) throw new Error('문의 시트를 찾을 수 없습니다. 스크립트 속성에 SHEET_ID를 넣어 주세요.');
+  return ss;
+}
+
 function getSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet_();
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
@@ -90,7 +99,7 @@ function sendEmail_(d, now) {
     }).join('') +
     '</table>' +
     '<p style="color:#666;margin-top:16px">이 메일에 바로 <b>답장</b>하면 고객(' + esc(d.email) + ')에게 전달됩니다.</p>' +
-    '<p><a href="' + SpreadsheetApp.getActiveSpreadsheet().getUrl() + '">문의 시트 열기</a></p></div>';
+    '<p><a href="' + getSpreadsheet_().getUrl() + '">문의 시트 열기</a></p></div>';
 
   MailApp.sendEmail({
     to: to,
@@ -102,40 +111,15 @@ function sendEmail_(d, now) {
   });
 }
 
-// ── 휴대폰 푸시 (ntfy) ──
-function sendPush_(d) {
-  const topic = PropertiesService.getScriptProperties().getProperty('NTFY_TOPIC');
-  if (!topic) return;
-  const lines = [d.name + ' <' + d.email + '>'];
-  if (d.country) lines.push('국가: ' + d.country);
-  if (d.travel_dates) lines.push('시기: ' + d.travel_dates);
-  if (d.service) lines.push('서비스: ' + d.service);
-  if (d.message) lines.push('', d.message.slice(0, 300));
-  UrlFetchApp.fetch('https://ntfy.sh/', {
-    method: 'post',
-    contentType: 'application/json',
-    muteHttpExceptions: true,
-    payload: JSON.stringify({
-      topic: topic,
-      title: 'CareBridge 새 상담 문의',
-      message: lines.join('\n'),
-      tags: ['bellhop_bell'],
-      priority: 4,
-      click: SpreadsheetApp.getActiveSpreadsheet().getUrl(),
-    }),
-  });
-}
-
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
-/** 처음 한 번 실행: 시트를 만들고, 메일·푸시가 오는지 테스트합니다. (권한 승인 창이 뜹니다) */
+/** 처음 한 번 실행: 시트를 만들고, 메일이 오는지 테스트합니다. (권한 승인 창이 뜹니다) */
 function setupAndTest() {
   getSheet_();
   const d = { name: '테스트 고객', email: 'test@example.com', country: 'Singapore', travel_dates: 'March 2027', service: 'Medical coordination', message: '설정 테스트입니다. 이 줄은 지워도 됩니다.', page: 'setup' };
   saveToSheet_(d, new Date());
   sendEmail_(d, new Date());
-  sendPush_(d);
-  console.log('완료! 시트, 메일함, ntfy 앱을 확인하세요.');
+  console.log('완료! 시트와 메일함을 확인하세요.');
 }

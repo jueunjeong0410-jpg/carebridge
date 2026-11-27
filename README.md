@@ -1,7 +1,10 @@
 # CareBridge 홈페이지
 
 서울 프라이빗 메디컬 컨시어지 **Care Bridge** 홈페이지입니다.
-GitHub Pages로 무료 배포하고, 상담 문의는 **Gmail + 휴대폰 푸시(ntfy 앱) + 구글 시트**로 받습니다. 유지비 0원.
+GitHub Pages로 무료 배포하고, 상담 문의는 **메일 + 휴대폰 푸시(ntfy 앱) + 구글 시트**로 받습니다. 유지비 0원.
+
+- 메일·시트: 구글 Apps Script(`apps-script/Code.gs`)가 처리
+- 휴대폰 푸시: 접수 성공 직후 홈페이지가 ntfy로 바로 보냄 (구글 서버→ntfy는 공용 IP 한도 때문에 막힘). 토픽이 코드에 보이므로 푸시에는 개인정보를 넣지 않음
 
 ```
 docs/                  ← 실제로 배포되는 홈페이지 (GitHub Pages가 이 폴더를 보여줌)
@@ -35,14 +38,14 @@ apps-script/Code.gs    ← 문의를 받아 메일·푸시·시트로 보내는 
 3. 기본 코드를 다 지우고 `apps-script/Code.gs` 내용을 통째로 붙여넣기 → 저장
 4. 왼쪽 ⚙️ **프로젝트 설정 → 스크립트 속성 → 속성 추가**
    - `NOTIFY_EMAIL` = 알림 받을 메일 (여러 개면 쉼표로)
-   - `NTFY_TOPIC` = 2단계에서 만든 토픽 이름
+   - `SHEET_ID` = 문의 시트 주소에서 `/d/` 와 `/edit` 사이 글자
 5. 편집기 위쪽 함수 목록에서 **`setupAndTest`** 선택 → ▶ 실행 → 권한 승인
-   → 시트에 테스트 줄, 메일, 휴대폰 푸시가 오면 성공
+   → 시트에 테스트 줄이 생기고 메일이 오면 성공
 6. 오른쪽 위 **배포 → 새 배포** → 유형 ⚙️ *웹 앱*
    - 다음 사용자로 실행: **나**
    - 액세스 권한: **모든 사용자**
    → 배포 → **웹 앱 URL 복사** (`https://script.google.com/macros/s/…/exec`)
-7. `docs/assets/config.js` 열어서 따옴표 안에 URL 붙여넣기 → GitHub에 다시 올리기
+7. `docs/assets/config.js`에 URL과 ntfy 토픽 이름을 넣고 `npm run build` → GitHub에 다시 올리기
 
 > 코드를 고친 뒤엔 **배포 → 배포 관리 → ✏️ → 버전: 새 버전**으로 다시 배포해야 반영돼요. (URL은 그대로)
 
@@ -53,6 +56,8 @@ apps-script/Code.gs    ← 문의를 받아 메일·푸시·시트로 보내는 
 ```bash
 npm install      # 처음 한 번만
 npm run build    # docs/ 폴더가 다시 만들어짐
+python3 -m http.server 8765 --directory docs &   # 회귀테스트용 로컬 서버
+python3 tests/regress.py http://localhost:8765   # ALL PASS 확인 후 올리기
 ```
 
 ## 참고

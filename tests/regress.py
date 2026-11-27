@@ -9,10 +9,11 @@ def check(c,msg): print(('PASS ' if c else 'FAIL ')+msg); (None if c else fails.
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
-        posted=[]
+        posted=[]; pushed=[]
         async def handler(r):
             u=r.request.url
             if EP in u: posted.append(r.request.post_data); await r.fulfill(status=200, headers={'Access-Control-Allow-Origin':'*'}, body='{"code":"OK"}')
+            elif u.startswith('https://ntfy.sh/'): pushed.append(r.request.post_data); await r.fulfill(status=200, headers={'Access-Control-Allow-Origin':'*'}, body='{}')
             elif 'localhost' in u: await r.continue_()
             else: await r.abort()
         for path in ['/','/services/','/services/medical-coordination/','/services/personal-accompaniment/','/services/a-seamless-stay/']:
@@ -36,6 +37,15 @@ async def main():
         await pg.fill('#cb-name','Jane'); await pg.fill('#cb-email','jane@example.com'); await pg.click('#form-submit'); await pg.wait_for_timeout(500)
         check(len(posted)==1 and 'email=jane%40example.com' in posted[0],'form posts to Apps Script endpoint')
         check(await pg.is_visible('#form-success'),'success message shown')
+        await pg.wait_for_timeout(300)
+        import json as _j
+        check(len(pushed)==1 and _j.loads(pushed[0])['topic']=='carebridge-oszufbatef','phone push sent to ntfy topic')
+        check(len(pushed)==1 and 'jane' not in pushed[0].lower(),'push contains no name/email')
+        # 스팸봇(숨은 칸 채움)은 서버 전송·푸시 모두 안 함
+        await pg.click('#form-again'); await pg.fill('#cb-name','Bot'); await pg.fill('#cb-email','bot@example.com')
+        await pg.evaluate("document.getElementById('cb-website-alt').value='spam'")
+        await pg.click('#form-submit'); await pg.wait_for_timeout(500)
+        check(len(posted)==1 and len(pushed)==1,'honeypot submission is not sent or pushed')
         await b.close()
     print('\nRESULT:', 'ALL PASS' if not fails else f'{len(fails)} FAIL')
 asyncio.run(main())

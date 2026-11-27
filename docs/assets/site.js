@@ -89,6 +89,24 @@
     };
     var showError = function (msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); };
     var showSuccess = function () { form.reset(); form.classList.add('hidden'); success.classList.remove('hidden'); };
+    // 접수 성공 후 운영자 휴대폰(ntfy 앱)에 알림 — 개인정보 없이 '새 문의 도착'만 알림
+    var notifyPhone = function (service) {
+      var topic = window.CAREBRIDGE_PUSH_TOPIC;
+      if (!topic) return;
+      try {
+        fetch('https://ntfy.sh/', {
+          method: 'POST',
+          keepalive: true,
+          body: JSON.stringify({
+            topic: topic,
+            title: 'CareBridge 새 상담 문의',
+            message: '관심 서비스: ' + (service || '선택 안 함') + '\n자세한 내용은 메일함 또는 문의 시트를 확인하세요.',
+            tags: ['bellhop_bell'],
+            priority: 4
+          })
+        }).catch(function () {});
+      } catch (_) {}
+    };
     $('#form-again').addEventListener('click', function () { success.classList.add('hidden'); form.classList.remove('hidden'); });
 
     form.addEventListener('submit', function (e) {
@@ -118,6 +136,7 @@
             showError((json && json.message) || 'We could not send your request. Please try again shortly.');
             return;
           }
+          notifyPhone(data.get('service'));
           showSuccess();
         })
         .catch(function () { showError('We could not send your request. Please check your connection and try again.'); })
