@@ -1,18 +1,18 @@
 // 사이트 문구·이미지 데이터 — 문구를 바꾸려면 이 파일만 고치고 `npm run build` 하면 됩니다.
 
-const img = (query, w, h, seq, orientation) =>
-  `https://readdy.ai/api/search-image?query=${encodeURIComponent(query)}&width=${w}&height=${h}&seq=${seq}&orientation=${orientation}`;
+// 사진: Unsplash (Unsplash License — 무료, 출처 표기 의무 없음). 공식 이미지 서버에서 크기에 맞춰 불러옵니다.
+const img = (id, w, h) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${h}&q=75`;
 
 export const images = {
-  hero: img('Elegant quiet private concierge lounge with linen armchairs and low wooden table holding white orchids, floor to ceiling window looking onto a lush green garden, soft morning daylight, warm ivory and sage palette, understated luxury interior photography, calm and refined atmosphere', 1200, 1500, 'carebridge-hero-lounge-01', 'portrait'),
-  tea: img('Refined tea service on a stone terrace beside a green courtyard garden, handmade ceramic cup and linen napkin on a low travertine table, soft dappled afternoon light through leaves, muted sage and ivory tones, editorial hospitality photography', 1100, 1400, 'carebridge-garden-tea-02', 'portrait'),
-  journey: img('Softly blurred green garden foliage in low evening light, deep shadowed tones, minimal abstract natural texture, editorial moody photography with restrained colors', 1800, 1000, 'carebridge-journey-texture-03', 'landscape'),
+  hero: img('photo-1617326302376-c576dc5aa525', 1200, 1500),
+  tea: img('photo-1772485718316-8cd1d3838ffa', 1100, 1400),
+  journey: img('photo-1493673272479-a20888bcee10', 1800, 1000),
 };
 
 export const gallery = [
-  { src: img('Private car arriving at a quiet Seoul clinic entrance lined with trees, a concierge opening the door, soft autumn afternoon light, muted ivory and deep green palette, restrained editorial documentary photography', 1600, 1000, 'carebridge-visual-arrival-21', 'landscape'), caption: 'Arrival, arranged quietly' },
-  { src: img('Calm private waiting room in a Seoul medical centre with wooden slat walls, linen chairs and a single green plant, diffused daylight through paper blinds, warm neutral tones, quiet luxury interior photography', 1600, 1000, 'carebridge-visual-waiting-22', 'landscape'), caption: 'A familiar face in the waiting room' },
-  { src: img('A linen bound notebook with neat handwritten appointment notes beside a ceramic cup on a light wood table, soft window light, minimal still life editorial photography, ivory and sage tones', 1600, 1000, 'carebridge-visual-notes-23', 'landscape'), caption: 'A written summary after every visit' },
+  { src: img('photo-1642552668086-ba7fb7f894ce', 1600, 1000), caption: 'Arrival, arranged quietly' },
+  { src: img('photo-1762625570087-6d98fca29531', 1600, 1000), caption: 'A familiar face in the waiting room' },
+  { src: img('photo-1554757387-2a28855c78fb', 1600, 1000), caption: 'A written summary after every visit' },
 ];
 
 export const stats = [
@@ -50,7 +50,7 @@ export const services = [
     summary: 'Trusted doctor and hospital recommendations, appointments and every step of the paperwork — from registration and payment to medical documents and insurance claims.',
     detail: 'Doctor & hospital matching · Appointments · Documents & insurance claims',
     intro: 'Before you travel, the practical work begins. We recommend trusted doctors and hospitals for your needs, book your appointments and speak with the hospital on your behalf. On the day, we take care of registration and payment; afterwards, we request your medical documents and help you claim from your insurer. Nothing rushed — simply every detail arranged well in advance.',
-    image: img('Quiet consultation desk with neatly arranged documents, a linen folder and a ceramic cup, soft window light, warm neutral interior, minimal editorial hospitality photography, calm and orderly atmosphere', 1400, 1000, 'carebridge-detail-coordination-11', 'landscape'),
+    image: img('photo-1544377193-33dcf4d68fb5', 1400, 1000),
     inclusions: [
       'Recommendations of trusted doctors and hospitals for your needs',
       'Appointment booking aligned with your travel dates',
@@ -74,7 +74,7 @@ export const services = [
     summary: 'An English-speaking companion who interprets between you and your doctors and nurses, followed by a written report on your results and how to look after yourself at home.',
     detail: 'Interpretation · On-site support · Results & aftercare report',
     intro: 'Hospitals ask a great deal of attention. A familiar, English-speaking companion stays with you through every visit, helping you communicate with doctors and nurses and interpreting medical explanations on the spot, so nothing is lost in translation. Afterwards, you receive a written report of your results and how to manage your care once you are home.',
-    image: img('A calm companion walking beside a visitor through a light filled modern hospital corridor with warm wood walls and green plants, seen from behind, soft natural daylight, understated editorial photography, reassuring quiet mood', 1400, 1000, 'carebridge-detail-accompaniment-12', 'landscape'),
+    image: img('photo-1777269749032-d8d458ae594d', 1400, 1000),
     inclusions: [
       'An English-speaking companion throughout each hospital visit',
       'Smooth communication with your doctors and nurses',
@@ -96,7 +96,7 @@ export const services = [
     summary: 'A shortlist of safe, well-connected places to stay, airport pick-up, and curated sights and restaurants around your appointments — with reservations made for you.',
     detail: 'Airport pick-up · Accommodation · Sights & dining',
     intro: 'Time in an unfamiliar city should not feel like administration. We shortlist safe accommodation with easy transport and plenty nearby, meet you at the airport, and suggest places to see and restaurants to enjoy before and after your appointments. If you would like a table somewhere, we will book it for you.',
-    image: img('Serene hotel suite in Seoul with linen bedding, a low wooden bench and a large window showing soft city greenery, warm neutral palette, quiet luxury interior photography, restful afternoon light', 1400, 1000, 'carebridge-detail-stay-13', 'landscape'),
+    image: img('photo-1621891334481-5c14b369d9d7', 1400, 1000),
     inclusions: [
       'A shortlist of safe stays with easy transport and plenty to see nearby',
       'Airport pick-up on arrival',

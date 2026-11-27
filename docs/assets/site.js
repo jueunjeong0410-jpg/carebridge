@@ -7,6 +7,14 @@
     remove.split(' ').forEach(function (c) { if (c) el.classList.remove(c); });
   };
 
+  // ── 사진이 못 불러와지면 깨진 아이콘·대체글 대신 뒤의 배경색이 보이게 숨김 ──
+  var hideBroken = function (im) { im.style.visibility = 'hidden'; };
+  $$('img').forEach(function (im) {
+    if (im.complete && im.naturalWidth === 0 && im.getAttribute('src')) hideBroken(im);
+    im.addEventListener('error', function () { hideBroken(im); });
+    im.addEventListener('load', function () { im.style.visibility = ''; });
+  });
+
   // ── 헤더: 스크롤 시 배경/테두리 진하게 ──
   var header = $('#site-header');
   if (header) {

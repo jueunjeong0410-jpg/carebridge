@@ -26,7 +26,14 @@ async def main():
                 if h.startswith(BASE):
                     rr=await pg.request.get(h.split('#')[0]); check(rr.status==200, f'  link {h.replace(BASE,"")} -> {rr.status}')
             await pg.close()
+        # 사진: 모두 Unsplash 공식 서버, readdy 없음, 못 불러오면 숨김 처리
         pg=await b.new_page(); await pg.route('**/*',handler)
+        for path in ['/','/services/','/services/medical-coordination/','/services/personal-accompaniment/','/services/a-seamless-stay/']:
+            await pg.goto(BASE+path)
+            srcs=await pg.eval_on_selector_all('img','is=>is.map(i=>i.getAttribute("src")).filter(s=>s&&!s.includes("assets/"))')
+            check(all(x.startswith('https://images.unsplash.com/photo-') for x in srcs) and srcs, f'photos {path}: {len(srcs)} from Unsplash, none from readdy')
+            hidden=await pg.evaluate("[...document.images].filter(i=>i.getAttribute('src')&&!i.getAttribute('src').includes('assets/')).every(i=>i.style.visibility==='hidden')")
+            check(hidden, f'photos {path}: blocked images are hidden, not shown broken')
         expect={'/services/medical-coordination/':['trusted doctors and hospitals','Registration and payment','medical records, certificates','Insurance claim'],
                 '/services/personal-accompaniment/':['English-speaking companion','doctors and nurses','On-the-spot interpretation','written report','Aftercare guidance'],
                 '/services/a-seamless-stay/':['safe stays with easy transport','Airport pick-up','Sightseeing spots','Restaurant reservations made on your behalf'],
