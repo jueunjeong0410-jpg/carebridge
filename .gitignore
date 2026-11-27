@@ -1,2 +1,14 @@
 node_modules
 .DS_Store
+# 비밀값·개인정보가 담길 수 있는 파일은 절대 올리지 않음
+.env
+.env.*
+*.pem
+*.key
+*.p12
+credentials*.json
+service-account*.json
+client_secret*.json
+.clasp.json
+.clasprc.json
+*.local

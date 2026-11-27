@@ -58,6 +58,7 @@ npm install      # 처음 한 번만
 npm run build    # docs/ 폴더가 다시 만들어짐
 python3 -m http.server 8765 --directory docs &   # 회귀테스트용 로컬 서버
 python3 tests/regress.py http://localhost:8765   # ALL PASS 확인 후 올리기
+python3 tests/secret_scan.py --history           # 비밀값·개인정보 유출 검사
 ```
 
 ## 참고
@@ -65,3 +66,4 @@ python3 tests/regress.py http://localhost:8765   # ALL PASS 확인 후 올리기
 - 사진은 Unsplash(무료·상업 이용 가능, 출처 표기 의무 없음) 공식 이미지 서버에서 불러와요. 실제 서비스 사진이 생기면 `docs/assets/`에 넣고 `src/data.mjs`의 주소를 바꾸면 됩니다. 사진을 못 불러오면 깨진 아이콘 대신 배경색만 보여요.
 - 후기·숫자(48+ 병원, 12개 언어 등)는 시안의 예시 문구예요. 실제 운영 전에 사실에 맞게 바꿔 주세요.
 - 문의 폼에는 스팸봇용 숨은 칸과 1분 중복 전송 방지가 들어 있어요.
+- **유출 방지:** 알림 이메일·시트 ID는 Apps Script의 스크립트 속성에만 있고 저장소에는 없어요. 홈페이지 코드에 보이는 건 문의 접수 주소와 ntfy 토픽뿐인데, 둘 다 공개용이에요(푸시에는 개인정보를 넣지 않음). GitHub의 Secret Protection·Push protection도 켜져 있어요.
