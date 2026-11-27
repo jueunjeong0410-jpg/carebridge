@@ -5,8 +5,9 @@
  *   - 'Care Bridge' GA4 속성을 찾아 스크립트 속성 GA_PROPERTY에 저장
  *   - 문의 완료(generate_lead)를 '주요 이벤트(전환)'로 등록
  *   - 버튼 위치·서비스명 같은 이벤트 정보를 보고서에 쓸 수 있게 맞춤 측정기준 등록
- *   - 매일 아침 7시 자동 갱신 예약 → 바로 한 번 갱신
- * 이후: refreshDashboard가 매일 시트를 새로 채움 (수동 실행도 가능)
+ *   - 15분마다 자동 갱신 예약 → 바로 한 번 갱신
+ * 이후: refreshDashboard가 15분마다 시트를 새로 채움 (수동 실행도 가능)
+ *   · '지금 접속 중' 칸은 최근 30분 실시간 데이터, 나머지 보고서는 GA 처리 시간 때문에 몇 시간 늦을 수 있음
  *
  * 필요한 고급 서비스: AnalyticsData, AnalyticsAdmin (편집기 왼쪽 '서비스'에서 추가)
  */
@@ -73,9 +74,14 @@ function ensureCustomDims_(prop) {
   });
 }
 
+const REFRESH_MINUTES = 15; // 하루 자동 실행 한도(90분) 안에서 여유 있게
 function ensureTrigger_() {
-  const exists = ScriptApp.getProjectTriggers().some(function (t) { return t.getHandlerFunction() === 'refreshDashboard'; });
-  if (!exists) ScriptApp.newTrigger('refreshDashboard').timeBased().everyDays(1).atHour(7).inTimezone('Asia/Seoul').create();
+  const prev = PropertiesService.getScriptProperties().getProperty('DASH_TRIGGER');
+  const mine = ScriptApp.getProjectTriggers().filter(function (t) { return t.getHandlerFunction() === 'refreshDashboard'; });
+  if (mine.length === 1 && prev === 'every' + REFRESH_MINUTES + 'min') return;
+  mine.forEach(function (t) { ScriptApp.deleteTrigger(t); }); // 예전 '하루 1번' 예약 등 정리
+  ScriptApp.newTrigger('refreshDashboard').timeBased().everyMinutes(REFRESH_MINUTES).create();
+  PropertiesService.getScriptProperties().setProperty('DASH_TRIGGER', 'every' + REFRESH_MINUTES + 'min');
 }
 
 // ───────────── 보고서 ─────────────
@@ -161,6 +167,44 @@ function refreshDashboard() {
   writeTable_(DASH.audience, '누가 보나 — 국가·기기 (최근 30일)', ['국가', '기기', '방문(세션)', '방문자', '문의 완료', '전환율'], aud, [null, null, '0', '0', '0', '0.0%']);
 
   writeSummary_(daily);
+  writeRealtime_();
+}
+
+// ───────────── 지금 접속 중 (최근 30분, 실시간) ─────────────
+function realtime_(dims, mets) {
+  const prop = PropertiesService.getScriptProperties().getProperty('GA_PROPERTY');
+  const req = { dimensions: dims.map(function (n) { return { name: n }; }), metrics: mets.map(function (n) { return { name: n }; }), limit: 10 };
+  const res = AnalyticsData.Properties.runRealtimeReport(req, prop);
+  return (res.rows || []).map(function (r) {
+    return (r.dimensionValues || []).map(function (v) { return v.value; })
+      .concat((r.metricValues || []).map(function (v) { return Number(v.value); }));
+  });
+}
+
+function writeRealtime_() {
+  const sh = getSpreadsheet_().getSheetByName(DASH.summary);
+  if (!sh) return;
+  let total = 0, pages = [], countries = [], devices = [];
+  try {
+    const t = realtime_([], ['activeUsers']); total = t.length ? t[0][0] : 0;
+    pages = realtime_(['unifiedScreenName'], ['screenPageViews']).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 5);
+    countries = realtime_(['country'], ['activeUsers']).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 5);
+    devices = realtime_(['deviceCategory'], ['activeUsers']).sort(function (a, b) { return b[1] - a[1]; });
+  } catch (err) { Logger.log('실시간 보고서 오류: ' + err); }
+  const R = 20;
+  sh.getRange(R, 1, 12, 5).clearContent();
+  sh.getRange(R, 1).setValue('🟢 지금 접속 중 (최근 30분 · 실시간)').setFontWeight('bold').setFontSize(13);
+  sh.getRange(R + 1, 1, 1, 2).setValues([['접속자 수', total]]).setFontWeight('bold');
+  sh.getRange(R + 3, 1, 1, 5).setValues([['많이 보는 페이지', '조회', '', '나라 / 기기', '접속자']]).setFontWeight('bold').setBackground('#1f3a2e').setFontColor('#ffffff');
+  const side = countries.map(function (c) { return [c[0], c[1]]; }).concat(devices.map(function (d) { return [d[0], d[1]]; }));
+  const n = Math.max(pages.length, side.length, 1);
+  const rows = [];
+  for (let i = 0; i < n; i++) {
+    const p = pages[i] || ['', ''], q = side[i] || ['', ''];
+    rows.push([p[0], p[1], '', q[0], q[1]]);
+  }
+  if (!pages.length && !side.length) rows[0] = ['지금은 접속자가 없어요', '', '', '', ''];
+  sh.getRange(R + 4, 1, rows.length, 5).setValues(rows);
 }
 
 // ───────────── 한눈에 보는 요약 ─────────────
@@ -194,7 +238,7 @@ function writeSummary_(daily) {
   const sh = ss.getSheetByName(DASH.summary) || ss.insertSheet(DASH.summary, 0);
   sh.clear();
   sh.getRange(1, 1).setValue('CareBridge 홈페이지 성과 요약').setFontWeight('bold').setFontSize(15);
-  sh.getRange(2, 1).setValue('마지막 갱신: ' + Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm') + ' · 매일 오전 7시 자동 갱신 · ' + SITE).setFontColor('#888888');
+  sh.getRange(2, 1).setValue('마지막 갱신: ' + Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyy-MM-dd HH:mm') + ' · 15분마다 자동 갱신 · ' + SITE).setFontColor('#888888');
   sh.getRange(4, 1, 1, 5).setValues([['지표', '최근 7일', '그 전 7일', '변화', '최근 30일']]).setFontWeight('bold').setBackground('#1f3a2e').setFontColor('#ffffff');
   sh.getRange(5, 1, rows.length, 5).setValues(rows);
   sh.getRange(5, 2, 6, 2).setNumberFormat('#,##0'); sh.getRange(5, 5, 6, 1).setNumberFormat('#,##0');
