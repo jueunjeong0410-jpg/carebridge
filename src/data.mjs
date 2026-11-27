@@ -91,4 +91,16 @@ export const services = [
   },
 ];
 
-export const serviceOptions = ['Medical coordination', 'Personal accompaniment', 'A seamless stay', 'Not sure yet'];
+// 문의 폼의 '동행(에스코트) 유형' 선택지 — 순서대로 드롭다운에 표시됩니다.
+export const escortTypes = [
+  'Aesthetic procedures & cosmetic surgery', // 미용 시술·성형
+  'Health screening & check-up',             // 정기·종합 건강검진
+  'Dermatology & skin care',                 // 피부과 진료
+  'Dental care',                             // 치과
+  'Eye care & vision correction',            // 안과·시력교정(라식·라섹)
+  'Specialist consultation & second opinion',// 전문의 진료·2차 소견
+  'Surgery & major treatment',               // 수술·중증 치료(암 등)
+  'Fertility & women\'s health',             // 난임·여성 건강
+  'Korean medicine',                         // 한의원·한방 치료
+  'Other / not sure yet',                    // 기타·미정
+];

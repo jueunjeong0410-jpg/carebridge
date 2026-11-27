@@ -12,9 +12,9 @@
  */
 
 const SHEET_NAME = 'Inquiries';
-const HEADERS = ['접수 시각', '이름', '이메일', '거주 국가', '방문 예정 시기', '관심 서비스', '문의 내용', '접수 페이지', '처리 상태'];
-const FIELDS = ['name', 'email', 'country', 'travel_dates', 'service', 'message'];
-const LIMITS = { name: 100, email: 150, country: 80, travel_dates: 80, service: 60, message: 500, page: 300 };
+const HEADERS = ['접수 시각', '이름', '이메일', '전화번호', '거주 국가', '방문 예정 시기', '동행 유형', '문의 내용', '접수 페이지', '처리 상태'];
+const FIELDS = ['name', 'email', 'phone', 'country', 'travel_dates', 'service', 'message'];
+const LIMITS = { name: 100, email: 150, phone: 40, country: 80, travel_dates: 80, service: 60, message: 500, page: 300 };
 
 function doPost(e) {
   try {
@@ -26,6 +26,7 @@ function doPost(e) {
 
     if (!d.name) return json_({ code: 'ERROR', message: 'Please share your name.' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return json_({ code: 'ERROR', message: 'Please enter a valid email address.' });
+    if (!/^\+?[0-9()\-\s.]{7,}$/.test(d.phone) || d.phone.replace(/\D/g, '').length < 7) return json_({ code: 'ERROR', message: 'Please enter a phone number with your country code.' });
 
     // 같은 이메일로 1분 안에 반복 전송 막기
     const cache = CacheService.getScriptCache();
@@ -66,6 +67,10 @@ function getSheet_() {
     sh.appendRow(HEADERS);
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold').setBackground('#e8efe9');
+  } else if (sh.getRange(1, 4).getValue() !== '전화번호') {
+    // 예전 형식(전화번호 칸 없음) 시트: 이메일 오른쪽에 전화번호 칸을 끼워 넣고 제목줄을 새로 맞춤
+    sh.insertColumnAfter(3);
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold').setBackground('#e8efe9');
   }
   return sh;
 }
@@ -86,7 +91,7 @@ function sendEmail_(d, now) {
   const to = PropertiesService.getScriptProperties().getProperty('NOTIFY_EMAIL');
   if (!to) return;
   const esc = function (s) { return String(s || '-').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>'); };
-  const rows = [['이름', d.name], ['이메일', d.email], ['거주 국가', d.country], ['방문 예정 시기', d.travel_dates], ['관심 서비스', d.service], ['문의 내용', d.message]];
+  const rows = [['이름', d.name], ['이메일', d.email], ['전화번호', d.phone], ['거주 국가', d.country], ['방문 예정 시기', d.travel_dates], ['동행 유형', d.service], ['문의 내용', d.message]];
   const when = Utilities.formatDate(now, 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
   const html =
     '<div style="font-family:Arial,sans-serif;max-width:560px">' +
@@ -118,7 +123,7 @@ function json_(obj) {
 /** 처음 한 번 실행: 시트를 만들고, 메일이 오는지 테스트합니다. (권한 승인 창이 뜹니다) */
 function setupAndTest() {
   getSheet_();
-  const d = { name: '테스트 고객', email: 'test@example.com', country: 'Singapore', travel_dates: 'March 2027', service: 'Medical coordination', message: '설정 테스트입니다. 이 줄은 지워도 됩니다.', page: 'setup' };
+  const d = { name: '테스트 고객', email: 'test@example.com', phone: '+65 9123 4567', country: 'Singapore', travel_dates: 'March 2027', service: 'Health screening & check-up', message: '설정 테스트입니다. 이 줄은 지워도 됩니다.', page: 'setup' };
   saveToSheet_(d, new Date());
   sendEmail_(d, new Date());
   console.log('완료! 시트와 메일함을 확인하세요.');

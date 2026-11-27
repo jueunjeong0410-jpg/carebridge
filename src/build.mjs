@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { images, gallery, stats, attention, journey, reviews, services, serviceOptions } from './data.mjs';
+import { images, gallery, stats, attention, journey, reviews, services, escortTypes } from './data.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', 'docs');
 // 파일 내용이 바뀌면 ?v= 값도 바뀌어서, 방문자 브라우저가 예전 파일을 쓰지 않게 함
@@ -29,9 +29,9 @@ const header = (b) => {
 <header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background-50/80 backdrop-blur-sm border-b border-transparent">
   <div class="w-full px-5 md:px-10">
     <div class="flex items-center justify-between h-[72px] md:h-20">
-      <a class="flex items-center gap-3 cursor-pointer group" href="${home(b)}">
-        <span class="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center"><img alt="Care Bridge logo" class="w-full h-full object-contain" src="${b}assets/logo.svg"></span>
-        <span class="flex flex-col leading-none"><span class="text-[15px] md:text-base font-medium tracking-[0.22em] text-foreground-950 uppercase">Care Bridge</span><span class="hidden sm:block mt-1 text-[9px] tracking-[0.28em] text-foreground-500 uppercase font-label">Medical Concierge</span></span>
+      <a class="flex items-center gap-3 md:gap-4 cursor-pointer group" href="${home(b)}" aria-label="Care Bridge — home">
+        <img alt="Care Bridge" class="h-7 md:h-9 w-auto" src="${b}assets/logo.svg" width="1910" height="360">
+        <span class="hidden sm:block pl-3 md:pl-4 border-l border-foreground-950/15 text-[9px] md:text-[10px] leading-tight tracking-[0.28em] text-foreground-500 uppercase font-label">Medical<br>Concierge</span>
       </a>
       <nav class="hidden lg:flex items-center gap-9">
         ${links.map(([n, h]) => `<a href="${h}" class="${navCls}">${n}</a>`).join('')}
@@ -56,9 +56,9 @@ const footer = (b) => {
   <div class="mx-auto max-w-shell px-5 md:px-10 pt-14 md:pt-16 pb-8">
     <div class="grid md:grid-cols-12 gap-10 md:gap-8">
       <div class="md:col-span-6">
-        <div class="flex items-center gap-3">
-          <span class="w-10 h-10 flex items-center justify-center rounded-full bg-background-50/95 p-1.5"><img alt="Care Bridge logo" class="w-full h-full object-contain" src="${b}assets/logo.svg"></span>
-          <div class="flex flex-col leading-none"><span class="text-sm tracking-[0.24em] uppercase text-background-50">Care Bridge</span><span class="mt-1 text-[9px] tracking-[0.28em] uppercase text-background-400">Private medical concierge</span></div>
+        <div class="flex items-center gap-4">
+          <img alt="Care Bridge" class="h-8 w-auto" src="${b}assets/logo-light.svg" width="1910" height="360">
+          <span class="pl-4 border-l border-background-50/20 text-[9px] leading-tight tracking-[0.28em] uppercase text-background-400">Private medical<br>concierge</span>
         </div>
         <p class="mt-6 max-w-md font-heading text-xl md:text-2xl leading-snug text-background-100">Exceptional care. A familiar presence.</p>
         <p class="mt-5 text-[11px] tracking-[0.2em] uppercase text-background-400">Seoul, Republic of Korea</p>
@@ -93,7 +93,7 @@ const page = ({ b, title, description, body }) => `<!DOCTYPE html>
 <meta name="description" content="${esc(description)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
-<link rel="icon" type="image/svg+xml" href="${b}assets/logo.svg">
+<link rel="icon" type="image/svg+xml" href="${b}assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap">
@@ -295,9 +295,10 @@ const homeBody = (b) => `
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="min-w-0"><label for="cb-name" class="${labelCls}">Full name</label><input id="cb-name" name="name" type="text" required autocomplete="name" placeholder="Your name" maxlength="100" class="${inputCls}"></div>
               <div class="min-w-0"><label for="cb-email" class="${labelCls}">Email</label><input id="cb-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" maxlength="150" class="${inputCls}"></div>
+              <div class="min-w-0"><label for="cb-phone" class="${labelCls}">Phone (with country code)</label><input id="cb-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="e.g. +65 9123 4567" maxlength="40" pattern="^\\+?[0-9\\(\\)\\-\\s\\.]{7,}$" title="Please include your country code, e.g. +65 9123 4567" class="${inputCls}"></div>
               <div class="min-w-0"><label for="cb-country" class="${labelCls}">Country of residence</label><input id="cb-country" name="country" type="text" autocomplete="country-name" placeholder="e.g. Singapore" maxlength="80" class="${inputCls}"></div>
               <div class="min-w-0"><label for="cb-dates" class="${labelCls}">Approximate travel dates</label><input id="cb-dates" name="travel_dates" type="text" placeholder="e.g. March 2026" maxlength="80" class="${inputCls}"></div>
-              <div class="min-w-0 sm:col-span-2"><label for="cb-service" class="${labelCls}">Service of interest</label><select id="cb-service" name="service" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 focus:outline-none focus:border-primary-500 cursor-pointer"><option value="" selected>Select a service</option>${serviceOptions.map((o) => `<option value="${esc(o)}">${esc(o)}</option>`).join('')}</select></div>
+              <div class="min-w-0"><label for="cb-service" class="${labelCls}">Type of medical escort</label><select id="cb-service" name="service" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 focus:outline-none focus:border-primary-500 cursor-pointer"><option value="" selected>Select a type of visit</option>${escortTypes.map((o) => `<option value="${esc(o)}">${esc(o)}</option>`).join('')}</select></div>
               <div class="min-w-0 sm:col-span-2"><label for="cb-message" class="${labelCls}">How can we help?</label><textarea id="cb-message" name="message" rows="4" maxlength="500" placeholder="Share your priorities, preferences and any arrangements already in place." class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm leading-relaxed text-foreground-900 placeholder:text-foreground-400 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
             </div>
             <div class="field-honeypot" aria-hidden="true"><label for="cb-website-alt">Company website</label><input id="cb-website-alt" name="contact_alt" type="text" tabindex="-1" autocomplete="off"></div>

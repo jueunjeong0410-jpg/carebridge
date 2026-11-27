@@ -100,7 +100,7 @@
           body: JSON.stringify({
             topic: topic,
             title: 'CareBridge 새 상담 문의',
-            message: '관심 서비스: ' + (service || '선택 안 함') + '\n자세한 내용은 메일함 또는 문의 시트를 확인하세요.',
+            message: '방문 유형: ' + (service || '선택 안 함') + '\n자세한 내용은 메일함 또는 문의 시트를 확인하세요.',
             tags: ['bellhop_bell'],
             priority: 4
           })

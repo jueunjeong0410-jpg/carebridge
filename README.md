@@ -51,7 +51,7 @@ apps-script/Code.gs    ← 문의를 받아 메일·푸시·시트로 보내는 
 
 ## 문구·이미지 고치기
 
-`src/data.mjs`(후기, 서비스 설명, 숫자 등)를 고친 뒤 터미널에서:
+`src/data.mjs`(후기, 서비스 설명, 숫자, 문의 폼의 동행 유형 목록 `escortTypes` 등)를 고친 뒤 터미널에서:
 
 ```bash
 npm install      # 처음 한 번만
