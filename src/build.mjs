@@ -278,9 +278,9 @@ const homeBody = (b) => `
         <h2 class="mt-6 font-heading text-[2.1rem] leading-[1.12] sm:text-4xl lg:text-[50px] text-foreground-950">Your peace of mind<br><span class="italic text-primary-700">begins here.</span></h2>
         <p class="mt-6 max-w-md text-[15px] leading-[1.9] text-foreground-600">Share a few details and a dedicated concierge will help you explore a stay shaped around you. Consultation requests are reviewed privately, one at a time.</p>
         <div class="mt-9 divide-y divide-foreground-950/10 border-y border-foreground-950/10">
-          ${[['ri-time-line', 'Response time', 'Enquiries are answered within two business days.'], ['ri-lock-line', 'Discretion', 'Details are kept confidential and never shared without your consent.'], ['ri-shield-check-line', 'Scope of service', 'Non-clinical coordination only. Clinical care remains with licensed providers.']].map(([ic, t, d]) => `<div class="flex items-start gap-4 py-4"><i class="${ic} text-lg text-primary-700 mt-0.5"></i><div><p class="text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">${t}</p><p class="mt-1 text-[14px] leading-relaxed text-foreground-700">${d}</p></div></div>`).join('')}
+          ${[['ri-customer-service-2-line', 'Always available', 'Our concierges are on standby 24 hours a day. You will hear from us within 12 hours at the latest.'], ['ri-lock-line', 'Discretion', 'Details are kept confidential and never shared without your consent.'], ['ri-shield-check-line', 'Scope of service', 'Non-clinical coordination only. Clinical care remains with licensed providers.']].map(([ic, t, d]) => `<div class="flex items-start gap-4 py-4"><i class="${ic} text-lg text-primary-700 mt-0.5"></i><div><p class="text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">${t}</p><p class="mt-1 text-[14px] leading-relaxed text-foreground-700">${d}</p></div></div>`).join('')}
         </div>
-        <p class="mt-6 text-[11px] tracking-[0.2em] uppercase text-foreground-500">Consultation enquiries · Coming soon</p>
+        <p class="mt-6 text-[11px] tracking-[0.2em] uppercase text-foreground-500">Consultation enquiries · Open 24/7</p>
       </div>
       <div class="lg:col-span-7">
         <div class="bg-background-50 border border-foreground-950/10 p-6 md:p-9">
@@ -288,7 +288,7 @@ const homeBody = (b) => `
           <div id="form-success" class="mt-6 hidden">
             <span class="inline-flex w-11 h-11 items-center justify-center rounded-full bg-primary-100 text-primary-700"><i class="ri-check-line text-xl"></i></span>
             <h3 class="mt-5 font-heading text-2xl text-foreground-950">Thank you for reaching out.</h3>
-            <p class="mt-3 text-[14px] leading-[1.85] text-foreground-600">Your enquiry has been received. A dedicated concierge will review your request and respond with availability in due course.</p>
+            <p class="mt-3 text-[14px] leading-[1.85] text-foreground-600">Your enquiry has been received. A dedicated concierge will be in touch within 12 hours at the latest.</p>
             <button type="button" id="form-again" class="mt-6 px-5 py-3 border border-foreground-950/20 text-[11px] tracking-[0.16em] uppercase text-foreground-800 hover:bg-background-100 transition-colors whitespace-nowrap cursor-pointer">Send another request</button>
           </div>
           <form id="carebridge-consultation-form" class="mt-5" novalidate>
@@ -298,7 +298,12 @@ const homeBody = (b) => `
               <div class="min-w-0"><label for="cb-phone" class="${labelCls}">Phone (with country code)</label><input id="cb-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="e.g. +65 9123 4567" maxlength="40" pattern="^\\+?[0-9\\(\\)\\-\\s\\.]{7,}$" title="Please include your country code, e.g. +65 9123 4567" class="${inputCls}"></div>
               <div class="min-w-0"><label for="cb-country" class="${labelCls}">Country of residence</label><input id="cb-country" name="country" type="text" autocomplete="country-name" placeholder="e.g. Singapore" maxlength="80" class="${inputCls}"></div>
               <div class="min-w-0"><label for="cb-dates" class="${labelCls}">Approximate travel dates</label><input id="cb-dates" name="travel_dates" type="text" placeholder="e.g. March 2026" maxlength="80" class="${inputCls}"></div>
-              <div class="min-w-0"><label for="cb-service" class="${labelCls}">Type of medical escort</label><select id="cb-service" name="service" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 focus:outline-none focus:border-primary-500 cursor-pointer"><option value="" selected>Select a type of visit</option>${escortTypes.map((o) => `<option value="${esc(o)}">${esc(o)}</option>`).join('')}</select></div>
+              <fieldset class="min-w-0 sm:col-span-2">
+                <legend class="flex flex-wrap items-baseline gap-x-3 gap-y-1"><span class="${labelCls}">Type of medical escort</span><span class="text-[11px] italic text-foreground-500">Select all that apply</span></legend>
+                <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
+                  ${escortTypes.map((o, i) => `<label for="cb-type-${i}" class="flex items-start gap-3 text-[13px] leading-snug text-foreground-800 cursor-pointer"><input id="cb-type-${i}" type="checkbox" name="service" value="${esc(o)}" class="mt-0.5 h-4 w-4 shrink-0 accent-primary-700 cursor-pointer"><span>${esc(o)}</span></label>`).join('')}
+                </div>
+              </fieldset>
               <div class="min-w-0 sm:col-span-2"><label for="cb-message" class="${labelCls}">How can we help?</label><textarea id="cb-message" name="message" rows="4" maxlength="500" placeholder="Share your priorities, preferences and any arrangements already in place." class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm leading-relaxed text-foreground-900 placeholder:text-foreground-400 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
             </div>
             <div class="field-honeypot" aria-hidden="true"><label for="cb-website-alt">Company website</label><input id="cb-website-alt" name="contact_alt" type="text" tabindex="-1" autocomplete="off"></div>
@@ -334,10 +339,18 @@ const servicesBody = (b) => `
           <div class="flex items-baseline gap-4"><span class="font-heading text-2xl text-accent-700">${s.number}</span><span class="h-px flex-1 bg-foreground-950/15"></span></div>
           <h2 class="mt-5 font-heading text-[1.9rem] leading-[1.15] sm:text-4xl lg:text-[44px] text-foreground-950">${esc(s.title)}</h2>
           <p class="mt-4 text-[15px] leading-[1.9] text-foreground-600">${esc(s.summary)}</p>
-          <ul class="mt-7 space-y-3">${s.inclusions.slice(0, 3).map((x) => `<li class="flex items-start gap-3 text-[14px] leading-relaxed text-foreground-700"><i class="ri-check-line text-primary-600 mt-0.5"></i><span>${esc(x)}</span></li>`).join('')}</ul>
+          <ul class="mt-7 space-y-3">${s.inclusions.slice(0, 5).map((x) => `<li class="flex items-start gap-3 text-[14px] leading-relaxed text-foreground-700"><i class="ri-check-line text-primary-600 mt-0.5"></i><span>${esc(x)}</span></li>`).join('')}</ul>
           <a href="${b}services/${s.slug}/" class="group mt-8 inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-foreground-900 border-b border-foreground-950/30 pb-2 hover:border-primary-600 hover:text-primary-700 transition-colors whitespace-nowrap cursor-pointer">View service details<i class="ri-arrow-right-line transition-transform group-hover:translate-x-1"></i></a>
         </div>
       </article>`).join('')}
+    </div>
+    <div class="mt-16 md:mt-24 pt-10 md:pt-14 border-t border-foreground-950/10">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-16">
+        <div class="lg:col-span-4">${eyebrow('Visits we accompany')}<h2 class="mt-5 font-heading text-[1.9rem] leading-[1.15] sm:text-4xl text-foreground-950">For every kind of visit.</h2><p class="mt-4 text-[14px] leading-[1.85] text-foreground-600">From a routine check-up to a planned procedure, each service can be arranged around the reason for your visit — and combined as you need.</p></div>
+        <ul class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-px bg-foreground-950/10 border border-foreground-950/10 self-start">
+          ${escortTypes.filter((t) => !/^Other/.test(t)).map((t) => `<li class="bg-background-50 px-5 py-4 flex items-start gap-3 text-[14px] leading-snug text-foreground-800"><i class="ri-check-line text-primary-600 mt-0.5"></i><span>${esc(t)}</span></li>`).join('')}<li class="bg-background-50 px-5 py-4 flex items-start gap-3 text-[14px] leading-snug text-foreground-500 italic"><i class="ri-add-line text-primary-600 mt-0.5 not-italic"></i><span>Something else? Just ask.</span></li>
+        </ul>
+      </div>
     </div>
     <div class="mt-16 md:mt-24 p-6 md:p-10 bg-background-100 border border-foreground-950/10">
       <div class="grid lg:grid-cols-12 gap-6 items-center">

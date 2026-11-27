@@ -123,7 +123,10 @@
       if (!endpoint) { showError('Consultation requests are not connected yet. Please try again shortly.'); return; }
 
       var body = new URLSearchParams();
-      data.forEach(function (v, k) { if (k !== 'contact_alt' && typeof v === 'string') body.append(k, v); });
+      // 같은 이름 칸(동행 유형 체크박스 여러 개)은 쉼표로 묶어 한 칸으로 보냄
+      var services = data.getAll('service').join(', ');
+      data.forEach(function (v, k) { if (k !== 'contact_alt' && k !== 'service' && typeof v === 'string') body.append(k, v); });
+      body.append('service', services);
       body.append('page', location.href);
 
       setSending(true);
@@ -136,7 +139,7 @@
             showError((json && json.message) || 'We could not send your request. Please try again shortly.');
             return;
           }
-          notifyPhone(data.get('service'));
+          notifyPhone(services);
           showSuccess();
         })
         .catch(function () { showError('We could not send your request. Please check your connection and try again.'); })

@@ -14,7 +14,7 @@
 const SHEET_NAME = 'Inquiries';
 const HEADERS = ['접수 시각', '이름', '이메일', '전화번호', '거주 국가', '방문 예정 시기', '동행 유형', '문의 내용', '접수 페이지', '처리 상태'];
 const FIELDS = ['name', 'email', 'phone', 'country', 'travel_dates', 'service', 'message'];
-const LIMITS = { name: 100, email: 150, phone: 40, country: 80, travel_dates: 80, service: 60, message: 500, page: 300 };
+const LIMITS = { name: 100, email: 150, phone: 40, country: 80, travel_dates: 80, service: 400, message: 500, page: 300 };
 
 function doPost(e) {
   try {

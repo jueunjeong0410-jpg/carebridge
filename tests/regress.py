@@ -26,6 +26,16 @@ async def main():
                 if h.startswith(BASE):
                     rr=await pg.request.get(h.split('#')[0]); check(rr.status==200, f'  link {h.replace(BASE,"")} -> {rr.status}')
             await pg.close()
+        pg=await b.new_page(); await pg.route('**/*',handler)
+        expect={'/services/medical-coordination/':['trusted doctors and hospitals','Registration and payment','medical records, certificates','Insurance claim'],
+                '/services/personal-accompaniment/':['English-speaking companion','doctors and nurses','On-the-spot interpretation','written report','Aftercare guidance'],
+                '/services/a-seamless-stay/':['safe stays with easy transport','Airport pick-up','Sightseeing spots','Restaurant reservations made on your behalf'],
+                '/services/':['Visits we accompany','Insurance claim','Restaurant reservations','Korean medicine'],
+                '/':['insurance claims','report on your results','with reservations made for you']}
+        for path,phr in expect.items():
+            await pg.goto(BASE+path); t=await pg.text_content('main')
+            miss=[x for x in phr if x not in t]; check(not miss, f'content {path} {miss or "ok"}')
+        await pg.close()
         pg=await b.new_page(viewport={'width':1440,'height':800}); await pg.route('**/*',handler); await pg.goto(BASE+'/')
         logo=await pg.evaluate("(()=>{const i=document.querySelector('#site-header img');return [i.getAttribute('src'), i.naturalWidth, i.getBoundingClientRect().height]})()")
         check(logo[0].endswith('assets/logo.svg') and logo[1]>0 and logo[2]>=28,'header logo loads, shown large (%dpx tall)'%logo[2])
@@ -45,22 +55,27 @@ async def main():
         await pg.click('[data-gallery-open="0"]'); check(await pg.is_visible('#gallery-modal'),'gallery opens')
         await pg.keyboard.press('Escape'); check(not await pg.is_visible('#gallery-modal'),'gallery closes')
         check((await pg.evaluate('window.CAREBRIDGE_FORM_ENDPOINT')).endswith('/exec'),'endpoint configured')
-        opts = await pg.eval_on_selector_all('#cb-service option','os=>os.map(o=>o.value)')
-        check(opts[0]=='' and 'Aesthetic procedures & cosmetic surgery' in opts and 'Health screening & check-up' in opts and len(opts)==11,'escort type list (10 types + placeholder)')
+        opts = await pg.eval_on_selector_all('input[name=service][type=checkbox]','os=>os.map(o=>o.value)')
+        check(len(opts)==10 and 'Aesthetic procedures & cosmetic surgery' in opts and 'Health screening & check-up' in opts,'escort types are 10 checkboxes')
+        check('Select all that apply' in (await pg.text_content('#carebridge-consultation-form')),'"Select all that apply" hint shown')
+        body=await pg.text_content('body')
+        check('24 hours' in body and '12 hours' in body and 'two business days' not in body,'reply wording: 24h standby, within 12 hours')
+        check('24/7' in body.replace(' ','') and 'Average response' not in body,'stat shows 24/7 standby')
         await pg.fill('#cb-name','Jane'); await pg.fill('#cb-email','jane@example.com')
         await pg.click('#form-submit'); await pg.wait_for_timeout(300)
         check(len(posted)==0,'phone is required (blocked without phone)')
         await pg.fill('#cb-phone','abc'); await pg.click('#form-submit'); await pg.wait_for_timeout(300)
         check(len(posted)==0,'invalid phone blocked')
-        await pg.fill('#cb-phone','+65 9123 4567'); await pg.select_option('#cb-service','Dental care')
+        await pg.fill('#cb-phone','+65 9123 4567'); await pg.check('input[value="Dental care"]'); await pg.check('input[value="Health screening & check-up"]')
         await pg.click('#form-submit'); await pg.wait_for_timeout(500)
-        check(len(posted)==1 and 'email=jane%40example.com' in posted[0] and 'phone=%2B65+9123+4567' in posted[0] and 'service=Dental+care' in posted[0],'form posts name/email/phone/type to Apps Script')
+        check(len(posted)==1 and 'email=jane%40example.com' in posted[0] and 'phone=%2B65+9123+4567' in posted[0] and 'service=Health+screening+%26+check-up%2C+Dental+care' in posted[0] and posted[0].count('service=')==1,'form posts name/email/phone + both checked types (joined) to Apps Script')
         check(await pg.is_visible('#form-success'),'success message shown')
         await pg.wait_for_timeout(300)
         import json as _j
         check(len(pushed)==1 and _j.loads(pushed[0])['topic']=='carebridge-oszufbatef','phone push sent to ntfy topic')
         check(len(pushed)==1 and 'jane' not in pushed[0].lower() and '9123' not in pushed[0],'push contains no name/email/phone')
-        check(len(pushed)==1 and 'Dental care' in _j.loads(pushed[0])['message'],'push shows escort type')
+        check(len(pushed)==1 and 'Health screening & check-up, Dental care' in _j.loads(pushed[0])['message'],'push shows both escort types')
+        check(await pg.evaluate("[...document.querySelectorAll('input[name=service]')].every(c=>!c.checked)"),'checkboxes cleared after success')
         # 스팸봇(숨은 칸 채움)은 서버 전송·푸시 모두 안 함
         await pg.click('#form-again'); await pg.fill('#cb-name','Bot'); await pg.fill('#cb-email','bot@example.com'); await pg.fill('#cb-phone','+1 555 000 0000')
         await pg.evaluate("document.getElementById('cb-website-alt').value='spam'")
