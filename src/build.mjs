@@ -1,10 +1,13 @@
 // 정적 페이지 생성기: node src/build.mjs → docs/ 폴더에 HTML 생성
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { images, gallery, stats, attention, journey, reviews, services, serviceOptions } from './data.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', 'docs');
+// 파일 내용이 바뀌면 ?v= 값도 바뀌어서, 방문자 브라우저가 예전 파일을 쓰지 않게 함
+const ver = (rel) => { const p = join(root, rel); return existsSync(p) ? createHash('md5').update(readFileSync(p)).digest('hex').slice(0, 8) : '0'; };
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 // b = 사이트 루트까지의 상대경로 ('./', '../', '../../')
@@ -95,7 +98,7 @@ const page = ({ b, title, description, body }) => `<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
-<link rel="stylesheet" href="${b}assets/styles.css">
+<link rel="stylesheet" href="${b}assets/styles.css?v=${ver('assets/styles.css')}">
 </head>
 <body>
 <div class="min-h-screen bg-background-50 font-body">
@@ -105,8 +108,8 @@ ${body}
 </main>
 ${footer(b)}
 </div>
-<script src="${b}assets/config.js"></script>
-<script src="${b}assets/site.js"></script>
+<script src="${b}assets/config.js?v=${ver('assets/config.js')}"></script>
+<script src="${b}assets/site.js?v=${ver('assets/site.js')}"></script>
 </body>
 </html>
 `;
