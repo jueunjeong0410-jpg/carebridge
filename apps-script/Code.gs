@@ -12,9 +12,11 @@
  */
 
 const SHEET_NAME = 'Inquiries';
-const HEADERS = ['접수 시각', '이름', '이메일', '전화번호', '거주 국가', '방문 예정 시기', '동행 유형', '문의 내용', '접수 페이지', '처리 상태'];
-const FIELDS = ['name', 'email', 'phone', 'country', 'travel_dates', 'service', 'message'];
-const LIMITS = { name: 100, email: 150, phone: 40, country: 80, travel_dates: 80, service: 400, message: 500, page: 300 };
+const HEADERS = ['접수 시각', '이름', '이메일', '전화번호', '거주 국가', '병원 방문 희망일', '여행 기간', '동행 유형', '문의 내용', '접수 페이지', '처리 상태'];
+// 예전 시트의 제목 → 새 제목 (이름만 바뀐 칸)
+const HEADER_ALIASES = { '여행 기간': ['방문 예정 시기'], '동행 유형': ['관심 서비스'] };
+const FIELDS = ['name', 'email', 'phone', 'country', 'visit_date', 'travel_dates', 'service', 'message'];
+const LIMITS = { name: 100, email: 150, phone: 40, country: 80, visit_date: 10, travel_dates: 80, service: 400, message: 500, page: 300 };
 
 function doPost(e) {
   try {
@@ -27,6 +29,7 @@ function doPost(e) {
     if (!d.name) return json_({ code: 'ERROR', message: 'Please share your name.' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return json_({ code: 'ERROR', message: 'Please enter a valid email address.' });
     if (!/^\+?[0-9()\-\s.]{7,}$/.test(d.phone) || d.phone.replace(/\D/g, '').length < 7) return json_({ code: 'ERROR', message: 'Please enter a phone number with your country code.' });
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d.visit_date)) return json_({ code: 'ERROR', message: 'Please choose your preferred hospital visit date.' });
 
     // 같은 이메일로 1분 안에 반복 전송 막기
     const cache = CacheService.getScriptCache();
@@ -67,12 +70,24 @@ function getSheet_() {
     sh.appendRow(HEADERS);
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold').setBackground('#e8efe9');
-  } else if (sh.getRange(1, 4).getValue() !== '전화번호') {
-    // 예전 형식(전화번호 칸 없음) 시트: 이메일 오른쪽에 전화번호 칸을 끼워 넣고 제목줄을 새로 맞춤
-    sh.insertColumnAfter(3);
-    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold').setBackground('#e8efe9');
+  } else {
+    migrateHeaders_(sh);
   }
   return sh;
+}
+
+// 예전 형식 시트를 새 칸 구성에 맞춤: 없는 칸은 제자리에 끼워 넣고, 이름만 바뀐 칸은 제목만 바꿈 (기존 줄은 밀리지 않음)
+function migrateHeaders_(sh) {
+  const width = Math.max(sh.getLastColumn(), 1);
+  const row = sh.getRange(1, 1, 1, width).getValues()[0];
+  let changed = false;
+  HEADERS.forEach(function (h, i) {
+    if (row[i] === h) return;
+    if ((HEADER_ALIASES[h] || []).indexOf(row[i]) !== -1) { row[i] = h; changed = true; return; }
+    if (i < row.length && row[i] !== '') sh.insertColumnBefore(i + 1);
+    row.splice(i, 0, h); changed = true;
+  });
+  if (changed) sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold').setBackground('#e8efe9');
 }
 
 function saveToSheet_(d, now) {
@@ -91,7 +106,7 @@ function sendEmail_(d, now) {
   const to = PropertiesService.getScriptProperties().getProperty('NOTIFY_EMAIL');
   if (!to) return;
   const esc = function (s) { return String(s || '-').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>'); };
-  const rows = [['이름', d.name], ['이메일', d.email], ['전화번호', d.phone], ['거주 국가', d.country], ['방문 예정 시기', d.travel_dates], ['동행 유형', d.service], ['문의 내용', d.message]];
+  const rows = [['이름', d.name], ['이메일', d.email], ['전화번호', d.phone], ['거주 국가', d.country], ['병원 방문 희망일', d.visit_date], ['여행 기간', d.travel_dates], ['동행 유형', d.service], ['문의 내용', d.message]];
   const when = Utilities.formatDate(now, 'Asia/Seoul', 'yyyy-MM-dd HH:mm');
   const html =
     '<div style="font-family:Arial,sans-serif;max-width:560px">' +
@@ -110,7 +125,7 @@ function sendEmail_(d, now) {
     to: to,
     replyTo: d.email,
     name: 'CareBridge 홈페이지',
-    subject: '[CareBridge 문의] ' + d.name + (d.service ? ' · ' + d.service : ''),
+    subject: '[CareBridge 문의] ' + d.name + ' · 방문 희망 ' + d.visit_date + (d.service ? ' · ' + d.service : ''),
     htmlBody: html,
     body: rows.map(function (r) { return r[0] + ': ' + (r[1] || '-'); }).join('\n'),
   });
@@ -123,7 +138,7 @@ function json_(obj) {
 /** 처음 한 번 실행: 시트를 만들고, 메일이 오는지 테스트합니다. (권한 승인 창이 뜹니다) */
 function setupAndTest() {
   getSheet_();
-  const d = { name: '테스트 고객', email: 'test@example.com', phone: '+65 9123 4567', country: 'Singapore', travel_dates: 'March 2027', service: 'Health screening & check-up', message: '설정 테스트입니다. 이 줄은 지워도 됩니다.', page: 'setup' };
+  const d = { name: '테스트 고객', email: 'test@example.com', phone: '+65 9123 4567', country: 'Singapore', visit_date: '2027-03-05', travel_dates: '3 – 10 March 2027', service: 'Health screening & check-up', message: '설정 테스트입니다. 이 줄은 지워도 됩니다.', page: 'setup' };
   saveToSheet_(d, new Date());
   sendEmail_(d, new Date());
   console.log('완료! 시트와 메일함을 확인하세요.');

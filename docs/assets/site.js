@@ -98,7 +98,7 @@
     var showError = function (msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); };
     var showSuccess = function () { form.reset(); form.classList.add('hidden'); success.classList.remove('hidden'); };
     // 접수 성공 후 운영자 휴대폰(ntfy 앱)에 알림 — 개인정보 없이 '새 문의 도착'만 알림
-    var notifyPhone = function (service) {
+    var notifyPhone = function (service, visitDate) {
       var topic = window.CAREBRIDGE_PUSH_TOPIC;
       if (!topic) return;
       try {
@@ -108,13 +108,19 @@
           body: JSON.stringify({
             topic: topic,
             title: 'CareBridge 새 상담 문의',
-            message: '방문 유형: ' + (service || '선택 안 함') + '\n자세한 내용은 메일함 또는 문의 시트를 확인하세요.',
+            message: '병원 방문 희망일: ' + (visitDate || '-') + '\n방문 유형: ' + (service || '선택 안 함') + '\n자세한 내용은 메일함 또는 문의 시트를 확인하세요.',
             tags: ['bellhop_bell'],
             priority: 4
           })
         }).catch(function () {});
       } catch (_) {}
     };
+    // 병원 방문 희망일: 오늘 이전 날짜는 고를 수 없게
+    var visit = $('#cb-visit');
+    if (visit) {
+      var t = new Date(), pad = function (n) { return String(n).padStart(2, '0'); };
+      visit.min = t.getFullYear() + '-' + pad(t.getMonth() + 1) + '-' + pad(t.getDate());
+    }
     $('#form-again').addEventListener('click', function () { success.classList.add('hidden'); form.classList.remove('hidden'); });
 
     form.addEventListener('submit', function (e) {
@@ -147,7 +153,7 @@
             showError((json && json.message) || 'We could not send your request. Please try again shortly.');
             return;
           }
-          notifyPhone(services);
+          notifyPhone(services, data.get('visit_date'));
           showSuccess();
         })
         .catch(function () { showError('We could not send your request. Please check your connection and try again.'); })

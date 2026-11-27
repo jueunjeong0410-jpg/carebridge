@@ -312,7 +312,8 @@ const homeBody = (b) => `
               <div class="min-w-0"><label for="cb-email" class="${labelCls}">Email</label><input id="cb-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" maxlength="150" class="${inputCls}"></div>
               <div class="min-w-0"><label for="cb-phone" class="${labelCls}">Phone (with country code)</label><input id="cb-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="e.g. +65 9123 4567" maxlength="40" pattern="^\\+?[0-9\\(\\)\\-\\s\\.]{7,}$" title="Please include your country code, e.g. +65 9123 4567" class="${inputCls}"></div>
               <div class="min-w-0"><label for="cb-country" class="${labelCls}">Country of residence</label><input id="cb-country" name="country" type="text" autocomplete="country-name" placeholder="e.g. Singapore" maxlength="80" class="${inputCls}"></div>
-              <div class="min-w-0"><label for="cb-dates" class="${labelCls}">Approximate travel dates</label><input id="cb-dates" name="travel_dates" type="text" placeholder="e.g. March 2026" maxlength="80" class="${inputCls}"></div>
+              <div class="min-w-0"><label for="cb-visit" class="${labelCls}">Preferred hospital visit date</label><input id="cb-visit" name="visit_date" type="date" required class="${inputCls} cursor-pointer"></div>
+              <div class="min-w-0"><label for="cb-dates" class="${labelCls}">Travel dates <span class="normal-case tracking-normal text-foreground-400">(optional)</span></label><input id="cb-dates" name="travel_dates" type="text" placeholder="e.g. 3 – 10 March 2027" maxlength="80" class="${inputCls}"></div>
               <fieldset class="min-w-0 sm:col-span-2">
                 <legend class="flex flex-wrap items-baseline gap-x-3 gap-y-1"><span class="${labelCls}">Type of medical escort</span><span class="text-[11px] italic text-foreground-500">Select all that apply</span></legend>
                 <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
@@ -426,7 +427,7 @@ const detailBody = (b, s) => `
 // ───────────────────────── 쓰기 ─────────────────────────
 const out = (rel, html) => { const p = join(root, rel); mkdirSync(dirname(p), { recursive: true }); writeFileSync(p, html); console.log('wrote', rel); };
 
-out('index.html', page({ b: './', title: 'Care Bridge | Private Medical Concierge in Seoul, Korea', description: 'Your personal companion to healthcare in Korea. Medical coordination, English-speaking hospital accompaniment and a seamless stay in Seoul.', body: homeBody('./') }));
+out('index.html', page({ b: './', title: 'Care Bridge | Private Medical Concierge in Seoul, Korea', description: 'Your personal companion to healthcare in Korea. Medical coordination, hospital accompaniment in English, Chinese, Japanese or Vietnamese, and a seamless stay in Seoul.', body: homeBody('./') }));
 out('services/index.html', page({ b: '../', title: 'Our services | Care Bridge Medical Concierge, Seoul', description: 'Three areas of non-clinical support: medical coordination, personal accompaniment and a seamless stay in Korea.', body: servicesBody('../') }));
 for (const s of services) {
   out(`services/${s.slug}/index.html`, page({ b: '../../', title: `${s.title} | Care Bridge Medical Concierge, Seoul`, description: s.summary, body: detailBody('../../', s) }));

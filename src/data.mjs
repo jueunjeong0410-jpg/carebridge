@@ -17,7 +17,7 @@ export const gallery = [
 
 export const stats = [
   { value: '0', suffix: '%', label: 'Commission taken from hospitals' },
-  { value: '12', suffix: '', label: 'Languages supported' },
+  { value: '4', suffix: '', label: 'Languages · English · 中文 · 日本語 · Tiếng Việt' },
   { value: '1', suffix: ':1', label: 'A dedicated concierge per guest' },
   { value: '24', suffix: '/7', label: 'Concierges on standby · reply within 12h' },
 ];
@@ -43,7 +43,7 @@ export const whyUs = [
 export const pledges = ['0% hospital commission', 'Prices shared before you book', 'Our fee agreed in writing'];
 
 export const attention = [
-  { icon: 'ri-chat-smile-2-line', title: 'A dedicated English-speaking concierge', text: 'One person who knows your itinerary, your preferences and your correspondence from beginning to end.' },
+  { icon: 'ri-chat-smile-2-line', title: 'A dedicated concierge who speaks your language', text: 'One person who knows your itinerary, your preferences and your correspondence from beginning to end.' },
   { icon: 'ri-user-follow-line', title: 'By your side at every appointment', text: 'A familiar face in the waiting room, interpreting the small details as well as the important ones.' },
   { icon: 'ri-shield-check-line', title: 'Considered around your privacy', text: 'Discreet coordination, confidential records and a service designed for absolute discretion.' },
 ];
@@ -90,13 +90,13 @@ export const services = [
   },
   {
     slug: 'personal-accompaniment', number: '02', title: 'Personal accompaniment',
-    tagline: 'An English-speaking companion beside you, and a clear report after.',
-    summary: 'An English-speaking companion who interprets between you and your doctors and nurses, followed by a written report on your results and how to look after yourself at home.',
+    tagline: 'A companion who speaks your language, and a clear report after.',
+    summary: 'A companion who speaks your language — English, Chinese, Japanese or Vietnamese — interpreting between you and your doctors and nurses, followed by a written report on your results and how to look after yourself at home.',
     detail: 'Interpretation · On-site support · Results & aftercare report',
-    intro: 'Hospitals ask a great deal of attention. A familiar, English-speaking companion stays with you through every visit, helping you communicate with doctors and nurses and interpreting medical explanations on the spot, so nothing is lost in translation. Afterwards, you receive a written report of your results and how to manage your care once you are home.',
+    intro: 'Hospitals ask a great deal of attention. A familiar companion who speaks your language — English, Chinese, Japanese or Vietnamese — stays with you through every visit, helping you communicate with doctors and nurses and interpreting medical explanations on the spot, so nothing is lost in translation. Afterwards, you receive a written report of your results and how to manage your care once you are home.',
     image: img('photo-1777269749032-d8d458ae594d', 1400, 1000),
     inclusions: [
-      'An English-speaking companion throughout each hospital visit',
+      'A companion in English, Chinese, Japanese or Vietnamese throughout each hospital visit',
       'Smooth communication with your doctors and nurses',
       'On-the-spot interpretation of medical explanations',
       'A written report of your consultation and test results',

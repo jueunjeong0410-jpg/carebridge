@@ -35,11 +35,12 @@ async def main():
             hidden=await pg.evaluate("[...document.images].filter(i=>i.getAttribute('src')&&!i.getAttribute('src').includes('assets/')).every(i=>i.style.visibility==='hidden')")
             check(hidden, f'photos {path}: blocked images are hidden, not shown broken')
         expect={'/services/medical-coordination/':['trusted doctors and hospitals','Registration and payment','medical records, certificates','Insurance claim'],
-                '/services/personal-accompaniment/':['English-speaking companion','doctors and nurses','On-the-spot interpretation','written report','Aftercare guidance'],
+                '/services/personal-accompaniment/':['speaks your language','doctors and nurses','On-the-spot interpretation','written report','Aftercare guidance'],
                 '/services/a-seamless-stay/':['safe stays with easy transport','Airport pick-up','Sightseeing spots','Restaurant reservations made on your behalf'],
                 '/services/':['Visits we accompany','Insurance claim','Restaurant reservations','Korean medicine'],
                 '/':['insurance claims','report on your results','with reservations made for you']}
-        expect['/'] += ['Why Care Bridge?','Independent advice','Local prices, shown upfront',"We've been there first",'Where it helps','0% hospital commission','Commission taken from hospitals']
+        expect['/'] += ['English · 中文 · 日本語 · Tiếng Việt','speaks your language','Why Care Bridge?','Independent advice','Local prices, shown upfront',"We've been there first",'Where it helps','0% hospital commission','Commission taken from hospitals']
+        expect['/services/personal-accompaniment/'] += ['English, Chinese, Japanese or Vietnamese']
         expect['/services/'] += ['Why Care Bridge?','0% hospital commission','Our fee agreed in writing']
         for path,phr in expect.items():
             await pg.goto(BASE+path); t=await pg.text_content('main')
@@ -50,6 +51,7 @@ async def main():
         allt=''
         for path in ['/','/services/','/services/medical-coordination/','/services/personal-accompaniment/','/services/a-seamless-stay/']:
             await pg.goto(BASE+path); allt+=await pg.text_content('body')
+        check('english-speaking' not in allt.lower() and 'languages supported' not in allt.lower(),'no English-only / 12-language wording left')
         check('partner hospital' not in allt.lower() and 'partner clinic' not in allt.lower(),'no "partner hospitals" wording anywhere')
         await pg.close()
         pg=await b.new_page(viewport={'width':1440,'height':800}); await pg.route('**/*',handler); await pg.goto(BASE+'/')
@@ -82,18 +84,25 @@ async def main():
         check(len(posted)==0,'phone is required (blocked without phone)')
         await pg.fill('#cb-phone','abc'); await pg.click('#form-submit'); await pg.wait_for_timeout(300)
         check(len(posted)==0,'invalid phone blocked')
-        await pg.fill('#cb-phone','+65 9123 4567'); await pg.check('input[value="Dental care"]'); await pg.check('input[value="Health screening & check-up"]')
+        await pg.fill('#cb-phone','+65 9123 4567')
+        await pg.click('#form-submit'); await pg.wait_for_timeout(300)
+        check(len(posted)==0,'visit date is required (blocked without it)')
+        check(await pg.evaluate("!document.getElementById('cb-dates').required"),'travel dates optional')
+        mn=await pg.get_attribute('#cb-visit','min'); import datetime as _d
+        check(mn==_d.date.today().isoformat(),'visit date cannot be in the past (min=%s)'%mn)
+        await pg.fill('#cb-visit','2027-03-05')
+        await pg.check('input[value="Dental care"]'); await pg.check('input[value="Health screening & check-up"]')
         await pg.click('#form-submit'); await pg.wait_for_timeout(500)
-        check(len(posted)==1 and 'email=jane%40example.com' in posted[0] and 'phone=%2B65+9123+4567' in posted[0] and 'service=Health+screening+%26+check-up%2C+Dental+care' in posted[0] and posted[0].count('service=')==1,'form posts name/email/phone + both checked types (joined) to Apps Script')
+        check(len(posted)==1 and 'email=jane%40example.com' in posted[0] and 'phone=%2B65+9123+4567' in posted[0] and 'service=Health+screening+%26+check-up%2C+Dental+care' in posted[0] and posted[0].count('service=')==1 and 'visit_date=2027-03-05' in posted[0] and 'travel_dates=&' in posted[0],'form posts name/email/phone + both checked types (joined) to Apps Script')
         check(await pg.is_visible('#form-success'),'success message shown')
         await pg.wait_for_timeout(300)
         import json as _j
         check(len(pushed)==1 and _j.loads(pushed[0])['topic']=='carebridge-oszufbatef','phone push sent to ntfy topic')
         check(len(pushed)==1 and 'jane' not in pushed[0].lower() and '9123' not in pushed[0],'push contains no name/email/phone')
-        check(len(pushed)==1 and 'Health screening & check-up, Dental care' in _j.loads(pushed[0])['message'],'push shows both escort types')
+        check(len(pushed)==1 and 'Health screening & check-up, Dental care' in _j.loads(pushed[0])['message'] and '2027-03-05' in _j.loads(pushed[0])['message'],'push shows both escort types + visit date')
         check(await pg.evaluate("[...document.querySelectorAll('input[name=service]')].every(c=>!c.checked)"),'checkboxes cleared after success')
         # 스팸봇(숨은 칸 채움)은 서버 전송·푸시 모두 안 함
-        await pg.click('#form-again'); await pg.fill('#cb-name','Bot'); await pg.fill('#cb-email','bot@example.com'); await pg.fill('#cb-phone','+1 555 000 0000')
+        await pg.click('#form-again'); await pg.fill('#cb-name','Bot'); await pg.fill('#cb-email','bot@example.com'); await pg.fill('#cb-phone','+1 555 000 0000'); await pg.fill('#cb-visit','2027-01-01')
         await pg.evaluate("document.getElementById('cb-website-alt').value='spam'")
         await pg.click('#form-submit'); await pg.wait_for_timeout(500)
         check(len(posted)==1 and len(pushed)==1,'honeypot submission is not sent or pushed')
