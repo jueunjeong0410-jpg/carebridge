@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Care Bridge | Private Medical Concierge in Seoul, Korea</title>
+<meta name="description" content="Your personal companion to healthcare in Korea. Medical coordination, English-speaking hospital accompaniment and a seamless stay in Seoul.">
+<meta property="og:title" content="Care Bridge | Private Medical Concierge in Seoul, Korea">
+<meta property="og:description" content="Your personal companion to healthcare in Korea. Medical coordination, English-speaking hospital accompaniment and a seamless stay in Seoul.">
+<link rel="icon" type="image/svg+xml" href="./assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
+<link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+<div class="min-h-screen bg-background-50 font-body">
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background-50/80 backdrop-blur-sm border-b border-transparent">
+  <div class="w-full px-5 md:px-10">
+    <div class="flex items-center justify-between h-[72px] md:h-20">
+      <a class="flex items-center gap-3 cursor-pointer group" href="./">
+        <span class="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center"><img alt="Care Bridge logo" class="w-full h-full object-contain" src="./assets/logo.svg"></span>
+        <span class="flex flex-col leading-none"><span class="text-[15px] md:text-base font-medium tracking-[0.22em] text-foreground-950 uppercase">Care Bridge</span><span class="hidden sm:block mt-1 text-[9px] tracking-[0.28em] text-foreground-500 uppercase font-label">Medical Concierge</span></span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-9">
+        <a href="./services/" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Our services</a><a href="#journey" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Your journey</a><a href="#reviews" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Guest reviews</a><a href="#consultation" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Private consultation</a>
+        <a href="#consultation" class="ml-2 px-6 py-3 bg-primary-700 text-background-50 text-[12px] tracking-[0.16em] uppercase rounded-full hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Enquire</a>
+      </nav>
+      <button id="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" class="lg:hidden w-10 h-10 flex items-center justify-center text-foreground-900 cursor-pointer"><i class="text-2xl ri-menu-line"></i></button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="lg:hidden overflow-hidden transition-all duration-300 bg-background-50 border-t max-h-0 opacity-0 border-transparent">
+    <div class="px-6 py-6 flex flex-col gap-5">
+      <a href="./services/" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Our services</a><a href="#journey" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Your journey</a><a href="#reviews" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Guest reviews</a><a href="#consultation" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Private consultation</a>
+      <a href="#consultation" class="mt-1 px-6 py-3 bg-primary-700 text-background-50 text-xs tracking-[0.16em] uppercase rounded-full text-center hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Enquire</a>
+    </div>
+  </div>
+</header>
+<main>
+
+<section id="top" class="relative bg-background-50 pt-[72px] md:pt-20">
+  <div class="mx-auto max-w-shell px-4 md:px-8 pt-4 md:pt-6">
+    <div class="relative overflow-hidden rounded-[24px] md:rounded-[36px] border border-foreground-950/10 bg-gradient-to-br from-primary-100 via-background-100 to-accent-100">
+      <div class="grid lg:grid-cols-2 items-stretch">
+        <div class="px-6 py-10 md:px-10 md:py-14 lg:px-14 lg:py-20 flex flex-col justify-center">
+          <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background-50/80 border border-foreground-950/10 backdrop-blur-sm text-[9px] md:text-[10px] tracking-[0.24em] uppercase text-foreground-700 w-fit"><span class="w-1.5 h-1.5 rounded-full bg-primary-500"></span>Seoul · Private medical concierge</span>
+          <h1 class="mt-6 md:mt-8 font-heading text-[2.5rem] leading-[1.05] sm:text-5xl lg:text-[68px] xl:text-[76px] tracking-[-0.01em] text-foreground-950">Exceptional care.<br><span class="italic text-primary-700">A familiar presence.</span></h1>
+          <p class="mt-6 max-w-[29rem] text-[14px] md:text-[15px] leading-[1.85] text-foreground-700">Your personal companion to healthcare in Korea. From the first conversation to your return home, every detail is thoughtfully taken care of.</p>
+          <div class="mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <a href="#consultation" class="group inline-flex items-center justify-center gap-3 px-7 py-4 bg-primary-700 text-background-50 text-[11px] tracking-[0.18em] uppercase rounded-full hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Arrange a private consultation<i class="ri-arrow-right-line transition-transform group-hover:translate-x-1"></i></a>
+            <a href="./services/" class="inline-flex items-center justify-center gap-3 px-7 py-4 bg-background-50/70 border border-foreground-950/20 text-foreground-900 text-[11px] tracking-[0.18em] uppercase rounded-full hover:bg-background-50 transition-colors whitespace-nowrap cursor-pointer">Our services<i class="ri-arrow-right-line"></i></a>
+          </div>
+          <div class="mt-10 md:mt-14 flex flex-wrap items-center gap-x-7 gap-y-3 text-[9px] md:text-[10px] tracking-[0.22em] uppercase text-foreground-600 font-label"><span>Personal attention</span><span class="h-px w-5 bg-foreground-400/60"></span><span>Absolute discretion</span><span class="h-px w-5 bg-foreground-400/60"></span><span>One point of contact</span></div>
+        </div>
+        <div class="relative w-full h-[320px] sm:h-[420px] lg:h-auto lg:min-h-[560px]">
+          <img alt="A tranquil private lounge opening onto a green garden" title="Care Bridge private lounge Seoul medical concierge" class="absolute inset-0 w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=Elegant%20quiet%20private%20concierge%20lounge%20with%20linen%20armchairs%20and%20low%20wooden%20table%20holding%20white%20orchids%2C%20floor%20to%20ceiling%20window%20looking%20onto%20a%20lush%20green%20garden%2C%20soft%20morning%20daylight%2C%20warm%20ivory%20and%20sage%20palette%2C%20understated%20luxury%20interior%20photography%2C%20calm%20and%20refined%20atmosphere&width=1200&height=1500&seq=carebridge-hero-lounge-01&orientation=portrait">
+          <div class="absolute inset-0 bg-gradient-to-t from-foreground-950/40 via-transparent to-transparent lg:bg-gradient-to-r lg:from-primary-100/70 lg:via-transparent lg:to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8"><p class="max-w-xs font-heading text-lg md:text-xl leading-snug text-background-50">A tranquil private lounge opening onto a green garden.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-background-50">
+  <div class="mx-auto max-w-shell px-5 md:px-10 py-10 md:py-14">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6 border-y border-foreground-950/10 py-8 md:py-10">
+      <div class="text-center lg:border-r lg:last:border-r-0 lg:border-foreground-950/10"><p class="flex items-baseline justify-center gap-0.5"><span class="font-heading text-4xl md:text-5xl lg:text-[56px] leading-none text-foreground-950">48</span><span class="font-heading text-lg md:text-xl text-primary-700">+</span></p><p class="mt-3 text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">Partner hospitals &amp; clinics</p></div><div class="text-center lg:border-r lg:last:border-r-0 lg:border-foreground-950/10"><p class="flex items-baseline justify-center gap-0.5"><span class="font-heading text-4xl md:text-5xl lg:text-[56px] leading-none text-foreground-950">12</span><span class="font-heading text-lg md:text-xl text-primary-700"></span></p><p class="mt-3 text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">Languages supported</p></div><div class="text-center lg:border-r lg:last:border-r-0 lg:border-foreground-950/10"><p class="flex items-baseline justify-center gap-0.5"><span class="font-heading text-4xl md:text-5xl lg:text-[56px] leading-none text-foreground-950">1</span><span class="font-heading text-lg md:text-xl text-primary-700">:1</span></p><p class="mt-3 text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">A dedicated concierge per guest</p></div><div class="text-center lg:border-r lg:last:border-r-0 lg:border-foreground-950/10"><p class="flex items-baseline justify-center gap-0.5"><span class="font-heading text-4xl md:text-5xl lg:text-[56px] leading-none text-foreground-950">2</span><span class="font-heading text-lg md:text-xl text-primary-700"> days</span></p><p class="mt-3 text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">Average response to enquiries</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="attention" class="bg-background-50 border-t border-foreground-950/10">
+  <div class="mx-auto max-w-shell px-5 md:px-10 py-16 md:py-24 lg:py-28">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-6 lg:sticky lg:top-28">
+        <div class="relative w-full h-[360px] sm:h-[460px] lg:h-[560px] bg-background-200"><img alt="Tea service beside a green garden courtyard" title="Care Bridge discreet personal attention Seoul" class="absolute inset-0 w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=Refined%20tea%20service%20on%20a%20stone%20terrace%20beside%20a%20green%20courtyard%20garden%2C%20handmade%20ceramic%20cup%20and%20linen%20napkin%20on%20a%20low%20travertine%20table%2C%20soft%20dappled%20afternoon%20light%20through%20leaves%2C%20muted%20sage%20and%20ivory%20tones%2C%20editorial%20hospitality%20photography&width=1100&height=1400&seq=carebridge-garden-tea-02&orientation=portrait"></div>
+      </div>
+      <div class="lg:col-span-6 lg:pt-6">
+        
+<div class="flex items-center gap-3 "><span class="h-px w-8 bg-foreground-400/60"></span><span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-label text-foreground-600">Personal attention · Absolute discretion</span></div>
+        <h2 class="mt-6 font-heading text-[2rem] leading-[1.15] sm:text-4xl lg:text-[46px] text-foreground-950">More than arrangements.<br><span class="italic text-primary-700">Reassurance.</span></h2>
+        <p class="mt-6 max-w-xl text-[15px] leading-[1.9] text-foreground-600">There are practical questions, and there are quieter ones. Care Bridge is built around both — a calm, familiar presence that holds the details so you can hold your attention where it matters.</p>
+        <div class="mt-10 md:mt-12 divide-y divide-foreground-950/10 border-y border-foreground-950/10">
+          <div class="flex gap-5 py-6 md:py-7"><span class="mt-0.5 w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-primary-50 text-primary-700"><i class="ri-chat-smile-2-line text-lg"></i></span><div><h3 class="font-heading text-xl md:text-[22px] leading-snug text-foreground-950">A dedicated English-speaking concierge</h3><p class="mt-2 text-[14px] leading-[1.8] text-foreground-600">One person who knows your itinerary, your preferences and your correspondence from beginning to end.</p></div></div><div class="flex gap-5 py-6 md:py-7"><span class="mt-0.5 w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-primary-50 text-primary-700"><i class="ri-user-follow-line text-lg"></i></span><div><h3 class="font-heading text-xl md:text-[22px] leading-snug text-foreground-950">By your side at every appointment</h3><p class="mt-2 text-[14px] leading-[1.8] text-foreground-600">A familiar face in the waiting room, interpreting the small details as well as the important ones.</p></div></div><div class="flex gap-5 py-6 md:py-7"><span class="mt-0.5 w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-primary-50 text-primary-700"><i class="ri-shield-check-line text-lg"></i></span><div><h3 class="font-heading text-xl md:text-[22px] leading-snug text-foreground-950">Considered around your privacy</h3><p class="mt-2 text-[14px] leading-[1.8] text-foreground-600">Discreet coordination, confidential records and a service designed for absolute discretion.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="bg-background-100 border-t border-foreground-950/10">
+  <div class="mx-auto max-w-shell px-5 md:px-10 py-16 md:py-24 lg:py-28">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-16 items-end">
+      <div class="lg:col-span-7">
+<div class="flex items-center gap-3 "><span class="h-px w-8 bg-foreground-400/60"></span><span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-label text-foreground-600">The art of being looked after</span></div><h2 class="mt-6 font-heading text-[2.1rem] leading-[1.12] sm:text-4xl lg:text-[52px] text-foreground-950">Our services</h2></div>
+      <div class="lg:col-span-5">
+        <p class="text-[15px] leading-[1.9] text-foreground-600">Three areas of support, arranged privately and adjusted to the shape of your stay. Each engagement begins with a conversation, not a package.</p>
+        <a href="./services/" class="group mt-5 inline-flex items-center gap-2 text-[10px] tracking-[0.22em] uppercase text-foreground-700 hover:text-primary-700 transition-colors whitespace-nowrap cursor-pointer">Explore all services<i class="ri-arrow-right-line transition-transform group-hover:translate-x-1"></i></a>
+      </div>
+    </div>
+    <div class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground-950/10 border border-foreground-950/10">
+      <a href="./services/medical-coordination/" class="group bg-background-50 p-6 md:p-8 lg:p-9 flex flex-col transition-colors duration-300 hover:bg-background-200/60 cursor-pointer"><span class="font-heading text-2xl text-accent-700">01</span><h3 class="mt-8 font-heading text-[26px] leading-tight text-foreground-950">Medical coordination</h3><p class="mt-4 text-[14px] leading-[1.85] text-foreground-600 flex-1">Thoughtful appointment planning, hospital communication and document coordination, shaped around your needs.</p><div class="mt-8 pt-5 border-t border-foreground-950/10 flex items-end justify-between gap-4"><p class="text-[10px] leading-relaxed tracking-[0.16em] uppercase text-foreground-500 font-label">Appointment planning · Hospital liaison · Records &amp; documents</p><i class="ri-arrow-right-up-line text-lg text-foreground-500 group-hover:text-primary-700 transition-colors"></i></div></a><a href="./services/personal-accompaniment/" class="group bg-background-50 p-6 md:p-8 lg:p-9 flex flex-col transition-colors duration-300 hover:bg-background-200/60 cursor-pointer"><span class="font-heading text-2xl text-accent-700">02</span><h3 class="mt-8 font-heading text-[26px] leading-tight text-foreground-950">Personal accompaniment</h3><p class="mt-4 text-[14px] leading-[1.85] text-foreground-600 flex-1">An English-speaking companion at the hospital, helping you navigate each visit with clarity and confidence.</p><div class="mt-8 pt-5 border-t border-foreground-950/10 flex items-end justify-between gap-4"><p class="text-[10px] leading-relaxed tracking-[0.16em] uppercase text-foreground-500 font-label">On-site support · Interpretation · Visit summaries</p><i class="ri-arrow-right-up-line text-lg text-foreground-500 group-hover:text-primary-700 transition-colors"></i></div></a><a href="./services/a-seamless-stay/" class="group bg-background-50 p-6 md:p-8 lg:p-9 flex flex-col transition-colors duration-300 hover:bg-background-200/60 cursor-pointer"><span class="font-heading text-2xl text-accent-700">03</span><h3 class="mt-8 font-heading text-[26px] leading-tight text-foreground-950">A seamless stay</h3><p class="mt-4 text-[14px] leading-[1.85] text-foreground-600 flex-1">Private transfer and accommodation coordination, with the practical details of your time in Korea considered.</p><div class="mt-8 pt-5 border-t border-foreground-950/10 flex items-end justify-between gap-4"><p class="text-[10px] leading-relaxed tracking-[0.16em] uppercase text-foreground-500 font-label">Transfers · Accommodation · Daily arrangements</p><i class="ri-arrow-right-up-line text-lg text-foreground-500 group-hover:text-primary-700 transition-colors"></i></div></a>
+    </div>
+    <p class="mt-8 text-[12px] leading-relaxed text-foreground-500">Care Bridge coordinates non-clinical support. Diagnosis, treatment and medical decisions remain with licensed healthcare providers.</p>
+  </div>
+</section>
+
+<section class="bg-background-50">
+  <div class="mx-auto max-w-shell px-5 md:px-10 py-14 md:py-20">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
+      <div>
+<div class="flex items-center gap-3 "><span class="h-px w-8 bg-foreground-400/60"></span><span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-label text-foreground-600">Inside the experience</span></div><h2 class="mt-5 font-heading text-[2rem] leading-[1.12] sm:text-4xl lg:text-[46px] text-foreground-950">Quietly considered,<br class="hidden sm:block"> from door to door.</h2></div>
+      <p class="max-w-sm text-[14px] leading-[1.85] text-foreground-600">A few glimpses of the days we arrange — unhurried, discreet and shaped around the person rather than the schedule.</p>
+    </div>
+    <div class="mt-8 md:mt-10 relative">
+      <div class="relative w-full h-[300px] sm:h-[420px] lg:h-[540px] rounded-[20px] md:rounded-[28px] overflow-hidden bg-background-200 group">
+        <img alt="Arrival, arranged quietly" title="Care Bridge private arrival Seoul" class="absolute inset-0 w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=Private%20car%20arriving%20at%20a%20quiet%20Seoul%20clinic%20entrance%20lined%20with%20trees%2C%20a%20concierge%20opening%20the%20door%2C%20soft%20autumn%20afternoon%20light%2C%20muted%20ivory%20and%20deep%20green%20palette%2C%20restrained%20editorial%20documentary%20photography&width=1600&height=1000&seq=carebridge-visual-arrival-21&orientation=landscape">
+        <div class="absolute inset-0 bg-gradient-to-t from-foreground-950/55 via-foreground-950/10 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 md:p-9 flex flex-wrap items-end justify-between gap-5">
+          <div><p class="text-[9px] tracking-[0.26em] uppercase text-background-200">01 — Arrival</p><p class="mt-2 font-heading text-xl md:text-3xl text-background-50">Arrival, arranged quietly</p></div>
+          <button type="button" data-gallery-open="0" class="inline-flex items-center gap-3 px-5 py-3.5 rounded-full bg-background-50/95 text-foreground-900 text-[10px] tracking-[0.18em] uppercase hover:bg-background-50 transition-colors whitespace-nowrap cursor-pointer"><i class="ri-gallery-view-2 text-base"></i>View gallery</button>
+        </div>
+      </div>
+      <div class="mt-4 grid grid-cols-2 gap-4">
+        <button type="button" data-gallery-open="1" class="group relative w-full h-[130px] sm:h-[170px] rounded-[16px] overflow-hidden bg-background-200 cursor-pointer"><img alt="A familiar face in the waiting room" title="Care Bridge service atmosphere Seoul" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://readdy.ai/api/search-image?query=Calm%20private%20waiting%20room%20in%20a%20Seoul%20medical%20centre%20with%20wooden%20slat%20walls%2C%20linen%20chairs%20and%20a%20single%20green%20plant%2C%20diffused%20daylight%20through%20paper%20blinds%2C%20warm%20neutral%20tones%2C%20quiet%20luxury%20interior%20photography&width=1600&height=1000&seq=carebridge-visual-waiting-22&orientation=landscape"><div class="absolute inset-0 bg-foreground-950/25 group-hover:bg-foreground-950/15 transition-colors"></div><span class="absolute bottom-3 left-4 right-4 text-left text-[10px] tracking-[0.14em] uppercase text-background-50">A familiar face in the waiting room</span></button><button type="button" data-gallery-open="2" class="group relative w-full h-[130px] sm:h-[170px] rounded-[16px] overflow-hidden bg-background-200 cursor-pointer"><img alt="A written summary after every visit" title="Care Bridge service atmosphere Seoul" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://readdy.ai/api/search-image?query=A%20linen%20bound%20notebook%20with%20neat%20handwritten%20appointment%20notes%20beside%20a%20ceramic%20cup%20on%20a%20light%20wood%20table%2C%20soft%20window%20light%2C%20minimal%20still%20life%20editorial%20photography%2C%20ivory%20and%20sage%20tones&width=1600&height=1000&seq=carebridge-visual-notes-23&orientation=landscape"><div class="absolute inset-0 bg-foreground-950/25 group-hover:bg-foreground-950/15 transition-colors"></div><span class="absolute bottom-3 left-4 right-4 text-left text-[10px] tracking-[0.14em] uppercase text-background-50">A written summary after every visit</span></button>
+      </div>
+    </div>
+  </div>
+  <div id="gallery-modal" class="hidden fixed inset-0 z-[60] bg-foreground-950/95 backdrop-blur-sm items-center justify-center p-4 md:p-10" role="dialog" aria-modal="true">
+    <div class="relative w-full max-w-5xl" data-gallery-inner>
+      <div class="relative w-full h-[52vh] md:h-[68vh] bg-foreground-900"><img id="gallery-img" alt="" class="absolute inset-0 w-full h-full object-contain" src=""></div>
+      <div class="mt-4 flex items-center justify-between gap-4">
+        <p id="gallery-caption" class="font-heading text-lg md:text-xl text-background-50"></p>
+        <div class="flex items-center gap-2">
+          <button type="button" data-gallery-prev aria-label="Previous image" class="w-10 h-10 flex items-center justify-center rounded-full border border-background-50/30 text-background-50 hover:bg-background-50/15 transition-colors cursor-pointer"><i class="ri-arrow-left-line"></i></button>
+          <button type="button" data-gallery-next aria-label="Next image" class="w-10 h-10 flex items-center justify-center rounded-full border border-background-50/30 text-background-50 hover:bg-background-50/15 transition-colors cursor-pointer"><i class="ri-arrow-right-line"></i></button>
+          <button type="button" data-gallery-close aria-label="Close gallery" class="w-10 h-10 flex items-center justify-center rounded-full bg-background-50 text-foreground-900 hover:bg-background-100 transition-colors cursor-pointer"><i class="ri-close-line text-lg"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>window.CB_GALLERY = [{"src":"https://readdy.ai/api/search-image?query=Private%20car%20arriving%20at%20a%20quiet%20Seoul%20clinic%20entrance%20lined%20with%20trees%2C%20a%20concierge%20opening%20the%20door%2C%20soft%20autumn%20afternoon%20light%2C%20muted%20ivory%20and%20deep%20green%20palette%2C%20restrained%20editorial%20documentary%20photography&width=1600&height=1000&seq=carebridge-visual-arrival-21&orientation=landscape","caption":"Arrival, arranged quietly"},{"src":"https://readdy.ai/api/search-image?query=Calm%20private%20waiting%20room%20in%20a%20Seoul%20medical%20centre%20with%20wooden%20slat%20walls%2C%20linen%20chairs%20and%20a%20single%20green%20plant%2C%20diffused%20daylight%20through%20paper%20blinds%2C%20warm%20neutral%20tones%2C%20quiet%20luxury%20interior%20photography&width=1600&height=1000&seq=carebridge-visual-waiting-22&orientation=landscape","caption":"A familiar face in the waiting room"},{"src":"https://readdy.ai/api/search-image?query=A%20linen%20bound%20notebook%20with%20neat%20handwritten%20appointment%20notes%20beside%20a%20ceramic%20cup%20on%20a%20light%20wood%20table%2C%20soft%20window%20light%2C%20minimal%20still%20life%20editorial%20photography%2C%20ivory%20and%20sage%20tones&width=1600&height=1000&seq=carebridge-visual-notes-23&orientation=landscape","caption":"A written summary after every visit"}];</script>
+</section>
+
+<section id="journey" class="relative bg-foreground-950 text-background-50 overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.12]"><img alt="" aria-hidden="true" class="w-full h-full object-cover object-top" src="https://readdy.ai/api/search-image?query=Softly%20blurred%20green%20garden%20foliage%20in%20low%20evening%20light%2C%20deep%20shadowed%20tones%2C%20minimal%20abstract%20natural%20texture%2C%20editorial%20moody%20photography%20with%20restrained%20colors&width=1800&height=1000&seq=carebridge-journey-texture-03&orientation=landscape"></div>
+  <div class="relative mx-auto max-w-shell px-5 md:px-10 py-16 md:py-24">
+    <div class="text-center">
+      
+<div class="flex items-center gap-3 justify-center"><span class="h-px w-8 bg-background-50/50"></span><span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-label text-background-100">Your journey, considered</span></div>
+      <h2 class="mt-5 font-heading text-[2rem] leading-[1.15] sm:text-4xl lg:text-[48px] text-background-50">One point of contact.<br class="sm:hidden"> <span class="italic text-accent-300">Every step of the way.</span></h2>
+    </div>
+    <div class="mt-9 hidden lg:flex items-center justify-center gap-3 flex-wrap">
+      <div class="flex items-center gap-3"><span class="text-[10px] tracking-[0.18em] uppercase text-background-200 px-4 py-2 rounded-full border border-background-50/25">We listen</span><i class="ri-arrow-right-s-line text-background-400"></i></div><div class="flex items-center gap-3"><span class="text-[10px] tracking-[0.18em] uppercase text-background-200 px-4 py-2 rounded-full border border-background-50/25">We prepare</span><i class="ri-arrow-right-s-line text-background-400"></i></div><div class="flex items-center gap-3"><span class="text-[10px] tracking-[0.18em] uppercase text-background-200 px-4 py-2 rounded-full border border-background-50/25">We accompany</span><i class="ri-arrow-right-s-line text-background-400"></i></div><div class="flex items-center gap-3"><span class="text-[10px] tracking-[0.18em] uppercase text-background-200 px-4 py-2 rounded-full border border-background-50/25">We stay connected</span></div>
+    </div>
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+      <div class="group relative rounded-[18px] border border-background-50/15 bg-background-50/[0.04] backdrop-blur-sm p-6 md:p-7 hover:bg-background-50/[0.08] transition-colors"><div class="flex items-center justify-between"><span class="w-11 h-11 flex items-center justify-center rounded-full bg-accent-300/15 text-accent-200"><i class="ri-chat-voice-line text-lg"></i></span><span class="font-heading text-xl tracking-[0.14em] text-accent-300">01</span></div><h3 class="mt-6 font-heading text-2xl leading-tight text-background-50">We listen</h3><p class="mt-3 text-[13px] leading-[1.8] text-background-200/85">A private conversation about your priorities, preferences and travel plans.</p></div><div class="group relative rounded-[18px] border border-background-50/15 bg-background-50/[0.04] backdrop-blur-sm p-6 md:p-7 hover:bg-background-50/[0.08] transition-colors"><div class="flex items-center justify-between"><span class="w-11 h-11 flex items-center justify-center rounded-full bg-accent-300/15 text-accent-200"><i class="ri-calendar-check-line text-lg"></i></span><span class="font-heading text-xl tracking-[0.14em] text-accent-300">02</span></div><h3 class="mt-6 font-heading text-2xl leading-tight text-background-50">We prepare</h3><p class="mt-3 text-[13px] leading-[1.8] text-background-200/85">A tailored itinerary, appointment coordination and clear service arrangements.</p></div><div class="group relative rounded-[18px] border border-background-50/15 bg-background-50/[0.04] backdrop-blur-sm p-6 md:p-7 hover:bg-background-50/[0.08] transition-colors"><div class="flex items-center justify-between"><span class="w-11 h-11 flex items-center justify-center rounded-full bg-accent-300/15 text-accent-200"><i class="ri-walk-line text-lg"></i></span><span class="font-heading text-xl tracking-[0.14em] text-accent-300">03</span></div><h3 class="mt-6 font-heading text-2xl leading-tight text-background-50">We accompany</h3><p class="mt-3 text-[13px] leading-[1.8] text-background-200/85">Personal support on the ground, from arrival through your hospital visits.</p></div><div class="group relative rounded-[18px] border border-background-50/15 bg-background-50/[0.04] backdrop-blur-sm p-6 md:p-7 hover:bg-background-50/[0.08] transition-colors"><div class="flex items-center justify-between"><span class="w-11 h-11 flex items-center justify-center rounded-full bg-accent-300/15 text-accent-200"><i class="ri-mail-send-line text-lg"></i></span><span class="font-heading text-xl tracking-[0.14em] text-accent-300">04</span></div><h3 class="mt-6 font-heading text-2xl leading-tight text-background-50">We stay connected</h3><p class="mt-3 text-[13px] leading-[1.8] text-background-200/85">Help coordinating follow-up communication after you return home.</p></div>
+    </div>
+    <p class="mt-10 text-center text-[11px] tracking-[0.16em] uppercase text-background-400">Non-clinical coordination · Clinical care remains with licensed providers</p>
+  </div>
+</section>
+
+<section id="reviews" class="bg-background-100 border-t border-foreground-950/10">
+  <div class="mx-auto max-w-shell px-5 md:px-10 py-16 md:py-24">
+    <div class="text-center">
+      
+<div class="flex items-center gap-3 justify-center"><span class="h-px w-8 bg-foreground-400/60"></span><span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-label text-foreground-600">In their words</span></div>
+      <h2 class="mt-5 font-heading text-[2rem] leading-[1.15] sm:text-4xl lg:text-[46px] text-foreground-950">Guests who have walked this way</h2>
+      <p class="mx-auto mt-4 max-w-xl text-[14px] leading-[1.85] text-foreground-600">Shared with permission, names abbreviated. Every engagement is private, and so are the details.</p>
+    </div>
+    <div class="relative mt-10 md:mt-14 mx-auto max-w-4xl">
+      <div class="absolute -top-4 left-0 right-0 flex justify-between md:-left-4 md:-right-4 md:top-1/2 md:-translate-y-1/2">
+        <button type="button" data-review-prev aria-label="Previous review" class="w-11 h-11 flex items-center justify-center rounded-full bg-background-50 border border-foreground-950/15 text-foreground-800 hover:bg-background-200 transition-colors cursor-pointer"><i class="ri-arrow-left-line text-lg"></i></button>
+        <button type="button" data-review-next aria-label="Next review" class="w-11 h-11 flex items-center justify-center rounded-full bg-background-50 border border-foreground-950/15 text-foreground-800 hover:bg-background-200 transition-colors cursor-pointer"><i class="ri-arrow-right-line text-lg"></i></button>
+      </div>
+      <div class="bg-background-50 border border-foreground-950/10 rounded-[20px] md:rounded-[28px] px-6 py-10 md:px-14 md:py-14 text-center">
+        <i class="ri-double-quotes-l text-3xl md:text-4xl text-accent-500"></i>
+        <blockquote id="review-quote" class="mt-5 font-heading text-xl leading-[1.55] sm:text-2xl md:text-[30px] md:leading-[1.5] text-foreground-950">I arrived not knowing how the week would work. By the time I left, everything had been arranged so quietly that I only had to think about my appointments.</blockquote>
+        <div class="mt-7 flex flex-col items-center gap-1.5">
+          <p id="review-name" class="text-[12px] tracking-[0.18em] uppercase text-foreground-800">Eleanor W.</p>
+          <p id="review-location" class="text-[11px] text-foreground-500">London, United Kingdom</p>
+          <p id="review-service" class="mt-1 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 text-[10px] tracking-[0.12em] uppercase text-primary-700">Medical coordination</p>
+        </div>
+      </div>
+      <div class="mt-6 flex items-center justify-center gap-4">
+        <div id="review-dots" class="flex items-center gap-2">
+          <button type="button" data-review-dot="0" aria-label="Go to review 1" class="h-1.5 rounded-full transition-all cursor-pointer w-7 bg-primary-600"></button><button type="button" data-review-dot="1" aria-label="Go to review 2" class="h-1.5 rounded-full transition-all cursor-pointer w-1.5 bg-foreground-300 hover:bg-foreground-400"></button><button type="button" data-review-dot="2" aria-label="Go to review 3" class="h-1.5 rounded-full transition-all cursor-pointer w-1.5 bg-foreground-300 hover:bg-foreground-400"></button><button type="button" data-review-dot="3" aria-label="Go to review 4" class="h-1.5 rounded-full transition-all cursor-pointer w-1.5 bg-foreground-300 hover:bg-foreground-400"></button><button type="button" data-review-dot="4" aria-label="Go to review 5" class="h-1.5 rounded-full transition-all cursor-pointer w-1.5 bg-foreground-300 hover:bg-foreground-400"></button>
+        </div>
+        <span id="review-count" class="text-[10px] tracking-[0.18em] uppercase text-foreground-500 font-label">01 / 05</span>
+      </div>
+    </div>
+  </div>
+  <script>window.CB_REVIEWS = [{"quote":"I arrived not knowing how the week would work. By the time I left, everything had been arranged so quietly that I only had to think about my appointments.","name":"Eleanor W.","location":"London, United Kingdom","service":"Medical coordination"},{"quote":"My companion stayed through every consultation and wrote a summary the same evening. It is the first time I have left a hospital understanding everything.","name":"Daniel K.","location":"San Francisco, United States","service":"Personal accompaniment"},{"quote":"The transfer, the apartment, the small things in between — all of it was considered before I thought to ask. It made the city feel familiar very quickly.","name":"Sophie L.","location":"Paris, France","service":"A seamless stay"},{"quote":"There was one person to write to, and they always knew the answer. For my mother, that calm was worth more than any arrangement.","name":"Hiroshi T.","location":"Tokyo, Japan","service":"Personal accompaniment"},{"quote":"Discreet, unhurried and genuinely kind. Nothing felt like a service being delivered — more like being looked after by someone who had done this before.","name":"Amelia R.","location":"Melbourne, Australia","service":"Medical coordination"}];</script>
+</section>
+
+<section id="consultation" class="bg-background-100 border-t border-foreground-950/10">
+  <div class="mx-auto max-w-shell px-5 md:px-10 py-16 md:py-24 lg:py-28">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-5">
+        
+<div class="flex items-center gap-3 "><span class="h-px w-8 bg-foreground-400/60"></span><span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-label text-foreground-600">A personal beginning</span></div>
+        <h2 class="mt-6 font-heading text-[2.1rem] leading-[1.12] sm:text-4xl lg:text-[50px] text-foreground-950">Your peace of mind<br><span class="italic text-primary-700">begins here.</span></h2>
+        <p class="mt-6 max-w-md text-[15px] leading-[1.9] text-foreground-600">Share a few details and a dedicated concierge will help you explore a stay shaped around you. Consultation requests are reviewed privately, one at a time.</p>
+        <div class="mt-9 divide-y divide-foreground-950/10 border-y border-foreground-950/10">
+          <div class="flex items-start gap-4 py-4"><i class="ri-time-line text-lg text-primary-700 mt-0.5"></i><div><p class="text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">Response time</p><p class="mt-1 text-[14px] leading-relaxed text-foreground-700">Enquiries are answered within two business days.</p></div></div><div class="flex items-start gap-4 py-4"><i class="ri-lock-line text-lg text-primary-700 mt-0.5"></i><div><p class="text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">Discretion</p><p class="mt-1 text-[14px] leading-relaxed text-foreground-700">Details are kept confidential and never shared without your consent.</p></div></div><div class="flex items-start gap-4 py-4"><i class="ri-shield-check-line text-lg text-primary-700 mt-0.5"></i><div><p class="text-[11px] tracking-[0.16em] uppercase text-foreground-500 font-label">Scope of service</p><p class="mt-1 text-[14px] leading-relaxed text-foreground-700">Non-clinical coordination only. Clinical care remains with licensed providers.</p></div></div>
+        </div>
+        <p class="mt-6 text-[11px] tracking-[0.2em] uppercase text-foreground-500">Consultation enquiries · Coming soon</p>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="bg-background-50 border border-foreground-950/10 p-6 md:p-9">
+          <p class="text-[10px] tracking-[0.28em] uppercase text-foreground-500 font-label">Private consultation request</p>
+          <div id="form-success" class="mt-6 hidden">
+            <span class="inline-flex w-11 h-11 items-center justify-center rounded-full bg-primary-100 text-primary-700"><i class="ri-check-line text-xl"></i></span>
+            <h3 class="mt-5 font-heading text-2xl text-foreground-950">Thank you for reaching out.</h3>
+            <p class="mt-3 text-[14px] leading-[1.85] text-foreground-600">Your enquiry has been received. A dedicated concierge will review your request and respond with availability in due course.</p>
+            <button type="button" id="form-again" class="mt-6 px-5 py-3 border border-foreground-950/20 text-[11px] tracking-[0.16em] uppercase text-foreground-800 hover:bg-background-100 transition-colors whitespace-nowrap cursor-pointer">Send another request</button>
+          </div>
+          <form id="carebridge-consultation-form" class="mt-5" novalidate>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="min-w-0"><label for="cb-name" class="block text-[11px] tracking-[0.14em] uppercase text-foreground-600">Full name</label><input id="cb-name" name="name" type="text" required autocomplete="name" placeholder="Your name" maxlength="100" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 placeholder:text-foreground-400 focus:outline-none focus:border-primary-500"></div>
+              <div class="min-w-0"><label for="cb-email" class="block text-[11px] tracking-[0.14em] uppercase text-foreground-600">Email</label><input id="cb-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" maxlength="150" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 placeholder:text-foreground-400 focus:outline-none focus:border-primary-500"></div>
+              <div class="min-w-0"><label for="cb-country" class="block text-[11px] tracking-[0.14em] uppercase text-foreground-600">Country of residence</label><input id="cb-country" name="country" type="text" autocomplete="country-name" placeholder="e.g. Singapore" maxlength="80" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 placeholder:text-foreground-400 focus:outline-none focus:border-primary-500"></div>
+              <div class="min-w-0"><label for="cb-dates" class="block text-[11px] tracking-[0.14em] uppercase text-foreground-600">Approximate travel dates</label><input id="cb-dates" name="travel_dates" type="text" placeholder="e.g. March 2026" maxlength="80" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 placeholder:text-foreground-400 focus:outline-none focus:border-primary-500"></div>
+              <div class="min-w-0 sm:col-span-2"><label for="cb-service" class="block text-[11px] tracking-[0.14em] uppercase text-foreground-600">Service of interest</label><select id="cb-service" name="service" class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm text-foreground-900 focus:outline-none focus:border-primary-500 cursor-pointer"><option value="" selected>Select a service</option><option value="Medical coordination">Medical coordination</option><option value="Personal accompaniment">Personal accompaniment</option><option value="A seamless stay">A seamless stay</option><option value="Not sure yet">Not sure yet</option></select></div>
+              <div class="min-w-0 sm:col-span-2"><label for="cb-message" class="block text-[11px] tracking-[0.14em] uppercase text-foreground-600">How can we help?</label><textarea id="cb-message" name="message" rows="4" maxlength="500" placeholder="Share your priorities, preferences and any arrangements already in place." class="mt-2 w-full box-border px-4 py-3 bg-background-50 border border-foreground-950/15 text-sm leading-relaxed text-foreground-900 placeholder:text-foreground-400 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
+            </div>
+            <div class="field-honeypot" aria-hidden="true"><label for="cb-website-alt">Company website</label><input id="cb-website-alt" name="contact_alt" type="text" tabindex="-1" autocomplete="off"></div>
+            <p id="form-error" class="hidden mt-4 text-[12px] leading-relaxed text-primary-800 bg-primary-50 border border-primary-200 px-4 py-3"></p>
+            <div class="mt-5 flex flex-col sm:flex-row sm:items-center gap-4">
+              <button type="submit" id="form-submit" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-primary-700 text-background-50 text-[11px] tracking-[0.18em] uppercase hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"><span data-label>Send request</span><i data-arrow class="ri-arrow-right-line text-sm"></i></button>
+              <p class="text-[11px] leading-relaxed text-foreground-500">Your details are held privately and used only to respond to this enquiry.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="bg-foreground-950 text-background-100">
+  <div class="mx-auto max-w-shell px-5 md:px-10 pt-14 md:pt-16 pb-8">
+    <div class="grid md:grid-cols-12 gap-10 md:gap-8">
+      <div class="md:col-span-6">
+        <div class="flex items-center gap-3">
+          <span class="w-10 h-10 flex items-center justify-center rounded-full bg-background-50/95 p-1.5"><img alt="Care Bridge logo" class="w-full h-full object-contain" src="./assets/logo.svg"></span>
+          <div class="flex flex-col leading-none"><span class="text-sm tracking-[0.24em] uppercase text-background-50">Care Bridge</span><span class="mt-1 text-[9px] tracking-[0.28em] uppercase text-background-400">Private medical concierge</span></div>
+        </div>
+        <p class="mt-6 max-w-md font-heading text-xl md:text-2xl leading-snug text-background-100">Exceptional care. A familiar presence.</p>
+        <p class="mt-5 text-[11px] tracking-[0.2em] uppercase text-background-400">Seoul, Republic of Korea</p>
+      </div>
+      <div class="md:col-span-3">
+        <h4 class="text-[10px] tracking-[0.28em] uppercase text-background-400 font-label"><a class="cursor-pointer hover:text-background-50 transition-colors" href="./services/">Services</a></h4>
+        <ul class="mt-5 space-y-3"><li><a class="text-[13px] text-background-200 hover:text-background-50 transition-colors cursor-pointer" href="./services/medical-coordination/">Medical coordination</a></li><li><a class="text-[13px] text-background-200 hover:text-background-50 transition-colors cursor-pointer" href="./services/personal-accompaniment/">Personal accompaniment</a></li><li><a class="text-[13px] text-background-200 hover:text-background-50 transition-colors cursor-pointer" href="./services/a-seamless-stay/">A seamless stay</a></li></ul>
+      </div>
+      <div class="md:col-span-3">
+        <h4 class="text-[10px] tracking-[0.28em] uppercase text-background-400 font-label"><a class="cursor-pointer hover:text-background-50 transition-colors" href="#consultation">Enquiries</a></h4>
+        <ul class="mt-5 space-y-3"><li><a class="text-[13px] text-background-200 hover:text-background-50 transition-colors cursor-pointer" href="./services/">Our services</a></li><li><a class="text-[13px] text-background-200 hover:text-background-50 transition-colors cursor-pointer" href="#journey">Your journey</a></li><li><a class="text-[13px] text-background-200 hover:text-background-50 transition-colors cursor-pointer" href="#consultation">Private consultation</a></li></ul>
+        <p class="mt-5 text-[12px] leading-relaxed text-background-400">Consultation requests are reviewed privately, one at a time.</p>
+      </div>
+    </div>
+    <div class="mt-12 pt-7 border-t border-background-50/15">
+      <p class="max-w-3xl text-[11px] leading-relaxed text-background-400">Care Bridge coordinates non-clinical support. Diagnosis, treatment and medical decisions remain with licensed healthcare providers. Services are subject to availability.</p>
+      <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <p class="text-[11px] tracking-[0.1em] text-background-400">© 2026 Care Bridge. Seoul, Republic of Korea.</p>
+        <p class="text-[10px] tracking-[0.22em] uppercase text-background-500">Personal attention · Absolute discretion</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+<script src="./assets/config.js"></script>
+<script src="./assets/site.js"></script>
+</body>
+</html>

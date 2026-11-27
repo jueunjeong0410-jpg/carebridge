@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --font-heading:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body:"Jost", "Inter", system-ui, sans-serif;
+  --font-label:"Jost", system-ui, sans-serif;
+  --background-50:.99 .006 90;--background-100:.975 .01 88;--background-200:.945 .014 88;--background-300:.9 .016 88;--background-400:.82 .018 88;--background-500:.72 .018 88;--background-600:.6 .017 88;--background-700:.48 .016 88;--background-800:.36 .015 88;--background-900:.26 .014 88;--background-950:.17 .012 88;
+  --foreground-50:.96 .006 150;--foreground-100:.91 .008 150;--foreground-200:.83 .01 150;--foreground-300:.72 .012 150;--foreground-400:.6 .014 150;--foreground-500:.48 .016 150;--foreground-600:.38 .018 150;--foreground-700:.3 .02 150;--foreground-800:.23 .02 150;--foreground-900:.18 .018 150;--foreground-950:.14 .016 150;
+  --primary-50:.97 .012 155;--primary-100:.93 .025 155;--primary-200:.86 .045 155;--primary-300:.76 .065 155;--primary-400:.62 .08 155;--primary-500:.46 .075 155;--primary-600:.38 .065 155;--primary-700:.31 .055 155;--primary-800:.26 .045 155;--primary-900:.22 .038 155;--primary-950:.17 .03 155;
+  --accent-50:.97 .015 85;--accent-100:.94 .03 85;--accent-200:.89 .05 85;--accent-300:.83 .07 85;--accent-400:.76 .08 85;--accent-500:.68 .08 85;--accent-600:.58 .072 85;--accent-700:.48 .062 85;--accent-800:.38 .05 85;--accent-900:.3 .04 85;--accent-950:.22 .03 85;
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{color:oklch(var(--foreground-900));background:oklch(var(--background-50));-webkit-font-smoothing:antialiased}
+.field-honeypot{width:1px;height:1px;position:absolute;top:auto;left:-9999px;overflow:hidden}
