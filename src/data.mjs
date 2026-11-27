@@ -4,7 +4,7 @@
 const img = (id, w, h) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${h}&q=75`;
 
 export const images = {
-  hero: img('photo-1617326302376-c576dc5aa525', 1200, 1500),
+  hero: img('photo-1672797494267-affab75c2bc0', 1200, 1500),
   tea: img('photo-1772485718316-8cd1d3838ffa', 1100, 1400),
   journey: img('photo-1493673272479-a20888bcee10', 1800, 1000),
 };
