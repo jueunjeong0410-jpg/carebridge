@@ -132,5 +132,8 @@ async def main():
         await pg.click('#mobile-menu >> text=A seamless stay'); await pg.wait_for_load_state()
         check(pg.url.endswith('/services/a-seamless-stay/'),'mobile menu lists services and links to detail')
         await b.close()
+    import pathlib
+    cn=pathlib.Path(__file__).resolve().parent.parent/'docs'/'CNAME'
+    check(cn.exists() and cn.read_text().strip()=='carebridge.seoul.kr','docs/CNAME = carebridge.seoul.kr (survives build)')
     print('\nRESULT:', 'ALL PASS' if not fails else f'{len(fails)} FAIL')
 asyncio.run(main())
