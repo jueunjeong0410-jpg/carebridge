@@ -132,6 +132,37 @@ async def main():
         await pg.click('#mobile-menu >> text=A seamless stay'); await pg.wait_for_load_state()
         check(pg.url.endswith('/services/a-seamless-stay/'),'mobile menu lists services and links to detail')
         await b.close()
+        # 방문 통계(GA4): 로컬에선 구글로 안 보내고 기록만, 개인정보 미포함, 전환·클릭 이벤트 기록
+        b=await p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
+        pg=await b.new_page(viewport={'width':1440,'height':900}); gtm=[]
+        async def h2(r):
+            u=r.request.url
+            if 'googletagmanager' in u or 'google-analytics' in u: gtm.append(u); await r.abort()
+            elif EP in u: await r.fulfill(status=200, headers={'Access-Control-Allow-Origin':'*'}, body='{"code":"OK"}')
+            elif u.startswith('https://ntfy.sh/'): await r.fulfill(status=200, headers={'Access-Control-Allow-Origin':'*'}, body='{}')
+            elif 'localhost' in u: await r.continue_()
+            else: await r.abort()
+        await pg.route('**/*',h2); await pg.goto(BASE+'/')
+        check(await pg.evaluate("window.CAREBRIDGE_GA_ID")=='G-415VN0PMW0','GA4 measurement ID configured')
+        check(len(gtm)==0,'analytics not sent from localhost (only live domain)')
+        ev=lambda: pg.evaluate("window.dataLayer.filter(a=>a[0]==='event').map(a=>[a[1],a[2]])")
+        await pg.evaluate("window.scrollTo(0,document.body.scrollHeight)"); await pg.wait_for_timeout(300)
+        check(any(e[0]=='scroll_depth' and e[1]['percent']==100 for e in await ev()),'scroll depth tracked')
+        await pg.click('header nav a[href*="#consultation"] >> nth=-1'); await pg.wait_for_timeout(300)
+        check(any(e[0]=='cta_click' and e[1]['cta_location']=='header' for e in await ev()),'CTA click tracked with location')
+        await pg.fill('#cb-name','Jane Doe'); await pg.fill('#cb-email','jane@example.com'); await pg.fill('#cb-phone','+65 9123 4567'); await pg.fill('#cb-visit','2027-03-05')
+        await pg.check('input[value="Dental care"]')
+        await pg.click('#form-submit'); await pg.wait_for_timeout(600)
+        evs=await ev(); names=[e[0] for e in evs]
+        check('form_start' in names and names.count('generate_lead')==1,'form_start + generate_lead (conversion) tracked once')
+        import json as _j2; dump=_j2.dumps(evs)
+        check('Jane' not in dump and 'jane@' not in dump and '9123' not in dump,'analytics events contain no personal info')
+        await pg.goto(BASE+'/services/'); await pg.hover('#services-menu > a'); await pg.wait_for_timeout(300)
+        await pg.evaluate("document.addEventListener('click',e=>e.preventDefault(),{once:true})")
+        await pg.click('#services-menu ul a >> nth=0'); await pg.wait_for_timeout(200)
+        check(any(e[0]=='service_menu_click' for e in await ev()),'service menu click tracked')
+        txt=await pg.text_content('footer'); check('Google Analytics' in txt,'footer discloses analytics use')
+        await b.close()
     import pathlib
     cn=pathlib.Path(__file__).resolve().parent.parent/'docs'/'CNAME'
     check(cn.exists() and cn.read_text().strip()=='carebridge.seoul.kr','docs/CNAME = carebridge.seoul.kr (survives build)')

@@ -87,7 +87,7 @@ const footer = (b) => {
       </div>
     </div>
     <div class="mt-12 pt-7 border-t border-background-50/15">
-      <p class="max-w-3xl text-[11px] leading-relaxed text-background-400">Care Bridge coordinates non-clinical support. Diagnosis, treatment and medical decisions remain with licensed healthcare providers. Services are subject to availability.</p>
+      <p class="max-w-3xl text-[11px] leading-relaxed text-background-400">Care Bridge coordinates non-clinical support. Diagnosis, treatment and medical decisions remain with licensed healthcare providers. Services are subject to availability. We use Google Analytics to understand how visitors use this site; the details you send in an enquiry are never shared with it.</p>
       <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <p class="text-[11px] tracking-[0.1em] text-background-400">© 2026 Care Bridge. Seoul, Republic of Korea.</p>
         <p class="text-[10px] tracking-[0.22em] uppercase text-background-500">Personal attention · Absolute discretion</p>
@@ -122,6 +122,7 @@ ${body}
 ${footer(b)}
 </div>
 <script src="${b}assets/config.js?v=${ver('assets/config.js')}"></script>
+<script src="${b}assets/analytics.js?v=${ver('assets/analytics.js')}"></script>
 <script src="${b}assets/site.js?v=${ver('assets/site.js')}"></script>
 </body>
 </html>
@@ -386,7 +387,7 @@ const servicesBody = (b) => `
         <div class="lg:col-span-4 lg:text-right"><a href="${b}#consultation" class="inline-flex items-center gap-3 px-7 py-4 bg-primary-700 text-background-50 text-[11px] tracking-[0.18em] uppercase rounded-full hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Arrange a consultation<i class="ri-arrow-right-line"></i></a></div>
       </div>
     </div>
-    <p class="mt-8 text-[12px] leading-relaxed text-foreground-500">Care Bridge coordinates non-clinical support. Diagnosis, treatment and medical decisions remain with licensed healthcare providers. Services are subject to availability.</p>
+    <p class="mt-8 text-[12px] leading-relaxed text-foreground-500">Care Bridge coordinates non-clinical support. Diagnosis, treatment and medical decisions remain with licensed healthcare providers. Services are subject to availability. We use Google Analytics to understand how visitors use this site; the details you send in an enquiry are never shared with it.</p>
   </div>
 </section>`;
 

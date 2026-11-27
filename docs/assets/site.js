@@ -132,6 +132,12 @@
       visit.min = t.getFullYear() + '-' + pad(t.getMonth() + 1) + '-' + pad(t.getDate());
     }
     $('#form-again').addEventListener('click', function () { success.classList.add('hidden'); form.classList.remove('hidden'); });
+    // 통계: 신청서 작성을 시작했는지 (처음 한 번만)
+    var started = false;
+    form.addEventListener('focusin', function () {
+      if (started) return; started = true;
+      if (window.cbTrack) window.cbTrack('form_start', { form_name: 'consultation' });
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -164,6 +170,8 @@
             return;
           }
           notifyPhone(services, data.get('visit_date'));
+          // 통계: 문의 접수 완료(전환). 개인정보 없이 동행 유형 개수만 보냄
+          if (window.cbTrack) window.cbTrack('generate_lead', { form_name: 'consultation', service_count: data.getAll('service').length, has_travel_dates: data.get('travel_dates') ? 'yes' : 'no' });
           showSuccess();
         })
         .catch(function () { showError('We could not send your request. Please check your connection and try again.'); })
