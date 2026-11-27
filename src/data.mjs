@@ -16,11 +16,31 @@ export const gallery = [
 ];
 
 export const stats = [
-  { value: '48', suffix: '+', label: 'Partner hospitals & clinics' },
+  { value: '0', suffix: '%', label: 'Commission taken from hospitals' },
   { value: '12', suffix: '', label: 'Languages supported' },
   { value: '1', suffix: ':1', label: 'A dedicated concierge per guest' },
   { value: '24', suffix: '/7', label: 'Concierges on standby · reply within 12h' },
 ];
+
+// 'Why Care Bridge?' — 우리만의 약속(USP). 실제 운영 원칙과 반드시 일치해야 합니다.
+export const whyUs = [
+  {
+    icon: 'ri-scales-3-line',
+    title: 'Independent advice',
+    text: 'We take no commission from any hospital or clinic. Every recommendation follows your condition — the right specialist and the right hospital for you — never a partnership.',
+  },
+  {
+    icon: 'ri-price-tag-3-line',
+    title: 'Local prices, shown upfront',
+    text: 'Before you book, we show you the hospital\'s standard price. No foreigner mark-up and nothing added to the hospital\'s bill. Our own fee is agreed with you separately, in writing.',
+  },
+  {
+    icon: 'ri-map-pin-user-line',
+    title: 'We\'ve been there first',
+    text: 'Where it helps, we visit your chosen hospital ahead of you — the route, the registration desk, the paperwork — so your day runs without surprises.',
+  },
+];
+export const pledges = ['0% hospital commission', 'Prices shared before you book', 'Our fee agreed in writing'];
 
 export const attention = [
   { icon: 'ri-chat-smile-2-line', title: 'A dedicated English-speaking concierge', text: 'One person who knows your itinerary, your preferences and your correspondence from beginning to end.' },

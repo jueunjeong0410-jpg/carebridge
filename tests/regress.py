@@ -39,9 +39,18 @@ async def main():
                 '/services/a-seamless-stay/':['safe stays with easy transport','Airport pick-up','Sightseeing spots','Restaurant reservations made on your behalf'],
                 '/services/':['Visits we accompany','Insurance claim','Restaurant reservations','Korean medicine'],
                 '/':['insurance claims','report on your results','with reservations made for you']}
+        expect['/'] += ['Why Care Bridge?','Independent advice','Local prices, shown upfront',"We've been there first",'Where it helps','0% hospital commission','Commission taken from hospitals']
+        expect['/services/'] += ['Why Care Bridge?','0% hospital commission','Our fee agreed in writing']
         for path,phr in expect.items():
             await pg.goto(BASE+path); t=await pg.text_content('main')
             miss=[x for x in phr if x not in t]; check(not miss, f'content {path} {miss or "ok"}')
+        await pg.goto(BASE+'/')
+        order=await pg.evaluate("[...document.querySelectorAll('main > section')].map(s=>s.id).filter(Boolean)")
+        check(order.index('why')+1==order.index('services'),'Why Care Bridge sits right before services (%s)'%order)
+        allt=''
+        for path in ['/','/services/','/services/medical-coordination/','/services/personal-accompaniment/','/services/a-seamless-stay/']:
+            await pg.goto(BASE+path); allt+=await pg.text_content('body')
+        check('partner hospital' not in allt.lower() and 'partner clinic' not in allt.lower(),'no "partner hospitals" wording anywhere')
         await pg.close()
         pg=await b.new_page(viewport={'width':1440,'height':800}); await pg.route('**/*',handler); await pg.goto(BASE+'/')
         logo=await pg.evaluate("(()=>{const i=document.querySelector('#site-header img');return [i.getAttribute('src'), i.naturalWidth, i.getBoundingClientRect().height]})()")

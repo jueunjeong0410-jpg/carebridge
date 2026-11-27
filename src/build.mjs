@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { images, gallery, stats, attention, journey, reviews, services, escortTypes } from './data.mjs';
+import { images, gallery, stats, attention, whyUs, pledges, journey, reviews, services, escortTypes } from './data.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', 'docs');
 // 파일 내용이 바뀌면 ?v= 값도 바뀌어서, 방문자 브라우저가 예전 파일을 쓰지 않게 함
@@ -15,6 +15,8 @@ const home = (b, hash = '') => (b === './' ? (hash || './') : `${b}${hash}`);
 
 const eyebrow = (text, { light = false, center = false } = {}) => `
 <div class="flex items-center gap-3 ${center ? 'justify-center' : ''}"><span class="h-px w-8 ${light ? 'bg-background-50/50' : 'bg-foreground-400/60'}"></span><span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-label ${light ? 'text-background-100' : 'text-foreground-600'}">${esc(text)}</span></div>`;
+
+const pledgeStrip = (extra = '') => `<ul class="${extra} flex flex-wrap items-center gap-x-6 gap-y-3 text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-foreground-700 font-label">${pledges.map((p) => `<li class="inline-flex items-center gap-2"><i class="ri-checkbox-circle-line text-base text-primary-600"></i>${esc(p)}</li>`).join('')}</ul>`;
 
 const header = (b) => {
   const navCls = 'text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer';
@@ -166,6 +168,19 @@ const homeBody = (b) => `
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="why" class="bg-background-50 border-t border-foreground-950/10">
+  <div class="mx-auto max-w-shell px-5 md:px-10 py-16 md:py-24 lg:py-28">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-16 items-end">
+      <div class="lg:col-span-7">${eyebrow('Why Care Bridge?')}<h2 class="mt-6 font-heading text-[2.1rem] leading-[1.12] sm:text-4xl lg:text-[52px] text-foreground-950">Advice you can trust.<br><span class="italic text-primary-700">Prices you can see.</span></h2></div>
+      <div class="lg:col-span-5"><p class="text-[15px] leading-[1.9] text-foreground-600">Medical travel should never depend on who pays whom. We are independent of the hospitals we recommend, and you see what things cost before you commit to anything.</p></div>
+    </div>
+    <div class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground-950/10 border border-foreground-950/10">
+      ${whyUs.map((w, i) => `<div class="bg-background-50 p-6 md:p-8 lg:p-9 flex flex-col"><div class="flex items-center justify-between"><span class="w-11 h-11 flex items-center justify-center rounded-full bg-primary-50 text-primary-700"><i class="${w.icon} text-lg"></i></span><span class="font-heading text-2xl text-accent-700">${String(i + 1).padStart(2, '0')}</span></div><h3 class="mt-8 font-heading text-[26px] leading-tight text-foreground-950">${esc(w.title)}</h3><p class="mt-4 text-[14px] leading-[1.85] text-foreground-600">${esc(w.text)}</p></div>`).join('')}
+    </div>
+    ${pledgeStrip('mt-8')}
   </div>
 </section>
 
@@ -328,6 +343,7 @@ const servicesBody = (b) => `
       <div class="lg:col-span-7"><h1 class="font-heading text-[2.6rem] leading-[1.06] sm:text-6xl lg:text-[76px] text-foreground-950">Our services</h1></div>
       <div class="lg:col-span-5"><p class="text-[15px] leading-[1.9] text-foreground-600">The art of being looked after. Three areas of non-clinical support, arranged privately and adjusted to the shape of your stay in Korea.</p></div>
     </div>
+    <div class="mt-10 md:mt-12 pt-6 border-t border-foreground-950/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4"><p class="font-heading text-xl md:text-2xl text-foreground-950">Why Care Bridge? <span class="italic text-primary-700">Independent, transparent, prepared.</span></p>${pledgeStrip()}</div>
   </div>
 </section>
 <section class="bg-background-50">
