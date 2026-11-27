@@ -26,6 +26,16 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  // ── 로고: 홈 화면에서 누르면 맨 위로 부드럽게, 다른 화면에서는 홈으로 이동 ──
+  var logo = $('#logo-home');
+  if (logo && logo.getAttribute('href') === './') {
+    logo.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // ── 모바일 메뉴 ──
   var toggle = $('#menu-toggle'), menu = $('#mobile-menu');
   if (toggle && menu) {

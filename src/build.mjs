@@ -31,12 +31,21 @@ const header = (b) => {
 <header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background-50/80 backdrop-blur-sm border-b border-transparent">
   <div class="w-full px-5 md:px-10">
     <div class="flex items-center justify-between h-[72px] md:h-20">
-      <a class="flex items-center gap-3 md:gap-4 cursor-pointer group" href="${home(b)}" aria-label="Care Bridge — home">
+      <a id="logo-home" class="flex items-center gap-3 md:gap-4 cursor-pointer" href="${b === './' ? './' : b}" aria-label="Care Bridge — home">
         <img alt="Care Bridge" class="h-7 md:h-9 w-auto" src="${b}assets/logo.svg" width="1910" height="360">
         <span class="hidden sm:block pl-3 md:pl-4 border-l border-foreground-950/15 text-[9px] md:text-[10px] leading-tight tracking-[0.28em] text-foreground-500 uppercase font-label">Medical<br>Concierge</span>
       </a>
       <nav class="hidden lg:flex items-center gap-9">
-        ${links.map(([n, h]) => `<a href="${h}" class="${navCls}">${n}</a>`).join('')}
+        <div class="relative group" id="services-menu">
+          <a href="${b}services/" class="${navCls} inline-flex items-center gap-1" aria-haspopup="true">Our services<i class="ri-arrow-down-s-line text-base transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i></a>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-200">
+            <ul role="menu" class="w-72 bg-background-50 border border-foreground-950/10 shadow-xl rounded-lg py-2">
+              ${services.map((s) => `<li role="none"><a role="menuitem" href="${b}services/${s.slug}/" class="flex items-baseline gap-3 px-5 py-3 text-[14px] text-foreground-800 hover:bg-background-200/70 hover:text-primary-700 transition-colors cursor-pointer"><span class="font-heading text-accent-700 text-sm">${s.number}</span>${esc(s.title)}</a></li>`).join('')}
+              <li role="none" class="mt-1 pt-1 border-t border-foreground-950/10"><a role="menuitem" href="${b}services/" class="block px-5 py-3 text-[11px] tracking-[0.18em] uppercase text-foreground-500 hover:text-primary-700 transition-colors cursor-pointer">All services →</a></li>
+            </ul>
+          </div>
+        </div>
+        ${links.slice(1).map(([n, h]) => `<a href="${h}" class="${navCls}">${n}</a>`).join('')}
         <a href="${home(b, '#consultation')}" class="ml-2 px-6 py-3 bg-primary-700 text-background-50 text-[12px] tracking-[0.16em] uppercase rounded-full hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Enquire</a>
       </nav>
       <button id="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" class="lg:hidden w-10 h-10 flex items-center justify-center text-foreground-900 cursor-pointer"><i class="text-2xl ri-menu-line"></i></button>
@@ -44,7 +53,9 @@ const header = (b) => {
   </div>
   <div id="mobile-menu" class="lg:hidden overflow-hidden transition-all duration-300 bg-background-50 border-t max-h-0 opacity-0 border-transparent">
     <div class="px-6 py-6 flex flex-col gap-5">
-      ${links.map(([n, h]) => `<a href="${h}" class="${mobCls}">${n}</a>`).join('')}
+      <a href="${b}services/" class="${mobCls}">Our services</a>
+      <div class="-mt-2 pl-4 border-l border-foreground-950/15 flex flex-col gap-3">${services.map((s) => `<a href="${b}services/${s.slug}/" class="text-[14px] text-foreground-700 hover:text-primary-600 transition-colors cursor-pointer">${esc(s.title)}</a>`).join('')}</div>
+      ${links.slice(1).map(([n, h]) => `<a href="${h}" class="${mobCls}">${n}</a>`).join('')}
       <a href="${home(b, '#consultation')}" class="mt-1 px-6 py-3 bg-primary-700 text-background-50 text-xs tracking-[0.16em] uppercase rounded-full text-center hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Enquire</a>
     </div>
   </div>

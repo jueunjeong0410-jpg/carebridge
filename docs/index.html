@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
-<link rel="stylesheet" href="./assets/styles.css?v=afc06577">
+<link rel="stylesheet" href="./assets/styles.css?v=e564776d">
 </head>
 <body>
 <div class="min-h-screen bg-background-50 font-body">
@@ -20,12 +20,21 @@
 <header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background-50/80 backdrop-blur-sm border-b border-transparent">
   <div class="w-full px-5 md:px-10">
     <div class="flex items-center justify-between h-[72px] md:h-20">
-      <a class="flex items-center gap-3 md:gap-4 cursor-pointer group" href="./" aria-label="Care Bridge — home">
+      <a id="logo-home" class="flex items-center gap-3 md:gap-4 cursor-pointer" href="./" aria-label="Care Bridge — home">
         <img alt="Care Bridge" class="h-7 md:h-9 w-auto" src="./assets/logo.svg" width="1910" height="360">
         <span class="hidden sm:block pl-3 md:pl-4 border-l border-foreground-950/15 text-[9px] md:text-[10px] leading-tight tracking-[0.28em] text-foreground-500 uppercase font-label">Medical<br>Concierge</span>
       </a>
       <nav class="hidden lg:flex items-center gap-9">
-        <a href="./services/" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Our services</a><a href="#journey" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Your journey</a><a href="#reviews" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Guest reviews</a><a href="#consultation" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Private consultation</a>
+        <div class="relative group" id="services-menu">
+          <a href="./services/" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer inline-flex items-center gap-1" aria-haspopup="true">Our services<i class="ri-arrow-down-s-line text-base transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"></i></a>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-200">
+            <ul role="menu" class="w-72 bg-background-50 border border-foreground-950/10 shadow-xl rounded-lg py-2">
+              <li role="none"><a role="menuitem" href="./services/medical-coordination/" class="flex items-baseline gap-3 px-5 py-3 text-[14px] text-foreground-800 hover:bg-background-200/70 hover:text-primary-700 transition-colors cursor-pointer"><span class="font-heading text-accent-700 text-sm">01</span>Medical coordination</a></li><li role="none"><a role="menuitem" href="./services/personal-accompaniment/" class="flex items-baseline gap-3 px-5 py-3 text-[14px] text-foreground-800 hover:bg-background-200/70 hover:text-primary-700 transition-colors cursor-pointer"><span class="font-heading text-accent-700 text-sm">02</span>Personal accompaniment</a></li><li role="none"><a role="menuitem" href="./services/a-seamless-stay/" class="flex items-baseline gap-3 px-5 py-3 text-[14px] text-foreground-800 hover:bg-background-200/70 hover:text-primary-700 transition-colors cursor-pointer"><span class="font-heading text-accent-700 text-sm">03</span>A seamless stay</a></li>
+              <li role="none" class="mt-1 pt-1 border-t border-foreground-950/10"><a role="menuitem" href="./services/" class="block px-5 py-3 text-[11px] tracking-[0.18em] uppercase text-foreground-500 hover:text-primary-700 transition-colors cursor-pointer">All services →</a></li>
+            </ul>
+          </div>
+        </div>
+        <a href="#journey" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Your journey</a><a href="#reviews" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Guest reviews</a><a href="#consultation" class="text-[13px] tracking-[0.12em] uppercase text-foreground-700 hover:text-primary-600 transition-colors whitespace-nowrap cursor-pointer">Private consultation</a>
         <a href="#consultation" class="ml-2 px-6 py-3 bg-primary-700 text-background-50 text-[12px] tracking-[0.16em] uppercase rounded-full hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Enquire</a>
       </nav>
       <button id="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" class="lg:hidden w-10 h-10 flex items-center justify-center text-foreground-900 cursor-pointer"><i class="text-2xl ri-menu-line"></i></button>
@@ -33,7 +42,9 @@
   </div>
   <div id="mobile-menu" class="lg:hidden overflow-hidden transition-all duration-300 bg-background-50 border-t max-h-0 opacity-0 border-transparent">
     <div class="px-6 py-6 flex flex-col gap-5">
-      <a href="./services/" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Our services</a><a href="#journey" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Your journey</a><a href="#reviews" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Guest reviews</a><a href="#consultation" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Private consultation</a>
+      <a href="./services/" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Our services</a>
+      <div class="-mt-2 pl-4 border-l border-foreground-950/15 flex flex-col gap-3"><a href="./services/medical-coordination/" class="text-[14px] text-foreground-700 hover:text-primary-600 transition-colors cursor-pointer">Medical coordination</a><a href="./services/personal-accompaniment/" class="text-[14px] text-foreground-700 hover:text-primary-600 transition-colors cursor-pointer">Personal accompaniment</a><a href="./services/a-seamless-stay/" class="text-[14px] text-foreground-700 hover:text-primary-600 transition-colors cursor-pointer">A seamless stay</a></div>
+      <a href="#journey" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Your journey</a><a href="#reviews" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Guest reviews</a><a href="#consultation" class="text-sm tracking-[0.12em] uppercase text-foreground-800 hover:text-primary-600 transition-colors cursor-pointer">Private consultation</a>
       <a href="#consultation" class="mt-1 px-6 py-3 bg-primary-700 text-background-50 text-xs tracking-[0.16em] uppercase rounded-full text-center hover:bg-primary-800 transition-colors whitespace-nowrap cursor-pointer">Enquire</a>
     </div>
   </div>
@@ -294,6 +305,6 @@
 </footer>
 </div>
 <script src="./assets/config.js?v=580bbd76"></script>
-<script src="./assets/site.js?v=cc392ace"></script>
+<script src="./assets/site.js?v=4cd7a5ba"></script>
 </body>
 </html>
